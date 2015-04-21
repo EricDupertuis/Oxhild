@@ -1,0 +1,7 @@
+oxhild_mtg:
+    resource: "@OxhildMtgBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

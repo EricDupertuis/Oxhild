@@ -59,17 +59,38 @@ class Card
      */
     protected $flavor;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Oxhild\MtgBundle\Entity\Artist")
+     */
     protected $artist;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
     protected $number;
 
+    /**
+     * @ORM\Column(type="string")
+     */
     protected $power;
 
+    /**
+     * @ORM\Column(type="string")
+     */
     protected $toughness;
 
+    /**
+     * @ORM\Column(type="string")
+     */
     protected $layout;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
     protected $multiverseid;
 
+    /**
+     * @ORM\Column(type="string")
+     */
     protected $image_name;
 }

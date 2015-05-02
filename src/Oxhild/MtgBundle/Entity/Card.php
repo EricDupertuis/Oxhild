@@ -31,7 +31,9 @@ class Card
      */
     protected $cmc;
 
-
+    /**
+     * @ORM\Column(type="string")
+     */
     protected $colors;
     /**
      * @ORM\Column(type="text")
@@ -60,7 +62,9 @@ class Card
     protected $flavor;
 
     /**
+     * @ORM\Column(type="string")
      * @ORM\ManyToOne(targetEntity="Oxhild\MtgBundle\Entity\Artist")
+     * @ORM\JoinColumn(name="artist_id", referencedColumnName="id")
      */
     protected $artist;
 

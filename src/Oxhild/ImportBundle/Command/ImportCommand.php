@@ -22,6 +22,9 @@ class ImportCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $jsonData = json_decode(file_get_contents('http://mtgjson.com/json/AllSets.json'));
-        var_dump($jsonData[0]);
+
+        foreach($jsonData as $key => $value) {
+            echo $key;
+        }
     }
 }

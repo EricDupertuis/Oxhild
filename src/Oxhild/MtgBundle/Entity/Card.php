@@ -2,7 +2,7 @@
 namespace Oxhild\MtgBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="cards")
@@ -32,22 +32,37 @@ class Card
     protected $cmc;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\ManyToMany(targetEntity="Color", inversedBy="cards")
+     * @ORM\JoinTable(name="colors_cards")
      */
     protected $colors;
+
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      */
     protected $type;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Supertype", inversedBy="cards")
+     * @ORM\JoinTable(name="supertypes_cards")
+     */
     protected $supertypes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Type", inversedBy="cards")
+     * @ORM\JoinTable(name="types_cards")
+     */
     protected $types;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Subtype", inversedBy="cards")
+     * @ORM\JoinTable(name="subtypes_cards")
+     */
     protected $subtypes;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\ManyToOne(targetEntity="Oxhild\MtgBundle\Entity\Rarity")
+     * @ORM\JoinColumn(name="rarity_id", referencedColumnName="id")
      */
     protected $rarity;
 
@@ -62,7 +77,6 @@ class Card
     protected $flavor;
 
     /**
-     * @ORM\Column(type="string")
      * @ORM\ManyToOne(targetEntity="Oxhild\MtgBundle\Entity\Artist")
      * @ORM\JoinColumn(name="artist_id", referencedColumnName="id")
      */
@@ -84,7 +98,8 @@ class Card
     protected $toughness;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\ManyToMany(targetEntity="Layout", inversedBy="cards")
+     * @ORM\JoinTable(name="layouts_cards")
      */
     protected $layout;
 

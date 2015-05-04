@@ -18,17 +18,28 @@ class ImportCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('import:all')
+            ->setName('mtg:import:all')
             ->setDescription('Import data from AllSets.json')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $jsonData = json_decode(file_get_contents('http://mtgjson.com/json/AllSets.json'));
+        $data = json_decode(file_get_contents('http://mtgjson.com/json/AllCards.json'));
 
-        foreach($jsonData as $key => $value) {
-            $card = new Card();
+        foreach($data as $key => $value) {
+
+            foreach($value as $c) {
+                $card = new Card();
+
+                $card->setName($c['name']);
+                $card->setManaCost($c['name']);
+                $card->setCmc($c['cmc']);
+
+                $em = $this->getContainer()->get('doctrine')->getManager();
+
+                $em->persist($card);
+            }
         }
     }
 }

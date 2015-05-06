@@ -5,16 +5,16 @@ namespace Oxhild\ImportBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Doctrine\ORM\EntityManager;
 use Oxhild\MtgBundle\Entity\Card;
-use Oxhild\MtgBundle\Entity\Artist;
-use Oxhild\MtgBundle\Entity\Color;
-use Oxhild\MtgBundle\Entity\Layout;
-use Oxhild\MtgBundle\Entity\Rarity;
-use Oxhild\MtgBundle\Entity\Subtype;
-use Oxhild\MtgBundle\Entity\Supertype;
-use Oxhild\MtgBundle\Entity\type;
+
 class ImportCommand extends ContainerAwareCommand
 {
+
+    /** @var  EntityManager $em */
+    protected $em;
+
     protected function configure()
     {
         $this
@@ -25,21 +25,24 @@ class ImportCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $data = json_decode(file_get_contents('http://mtgjson.com/json/AllCards.json'));
+        $this->em = $this->getContainer()->get("doctrine.orm.default_entity_manager");
 
-        foreach($data as $key => $value) {
+        $output->writeln('<info>Downloading json file</info>');
+        $download = file_get_contents('http://mtgjson.com/json/AllSets.json');
 
-            foreach($value as $c) {
-                $card = new Card();
-
-                $card->setName($c['name']);
-                $card->setManaCost($c['name']);
-                $card->setCmc($c['cmc']);
-
-                $em = $this->getContainer()->get('doctrine')->getManager();
-
-                $em->persist($card);
-            }
+        if ($download === false) {
+            $output->writeln('<error>Oups, file not find. Check your internet connection</error>');
+            die;
+        } else {
+            $data = json_decode($download);
+            file_put_contents('arraycards.txt', print_r($data, true));
         }
+
+        //foreach ($data as $set) {
+            // Import set first
+
+
+
+       // }
     }
 }

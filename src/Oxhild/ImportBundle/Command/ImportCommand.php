@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Doctrine\ORM\EntityManager;
 use Oxhild\MtgBundle\Entity\Card;
+use Oxhild\MtgBundle\Entity\Set;
 
 class ImportCommand extends ContainerAwareCommand
 {
@@ -34,15 +35,31 @@ class ImportCommand extends ContainerAwareCommand
             $output->writeln('<error>Oups, file not find. Check your internet connection</error>');
             die;
         } else {
-            $data = json_decode($download);
+            $output->writeln('<info>Download successful</info>');
+            $data = json_decode($download, true);
             file_put_contents('arraycards.txt', print_r($data, true));
         }
 
-        //foreach ($data as $set) {
+        foreach ($data as $content) {
             // Import set first
 
+            $check = $this->$em->getRepository('OxhildMtgBundle:Set');
+            $exists = $check->findBy(
+                array('name' => $content['name'])
+            );
 
+            if (!$exists) {
+                $set = new Set();
 
-       // }
+                $set->setName($content['name']);
+                $set->setCode($content['code']);
+                $set->setGathererCode($content['gathererCode']);
+                $set->setMagicCardsInfoCode($content['magicCardsInfoCode]']);
+                $set->setBorders($content['border']);
+                $set->setType($content['type']);
+
+                $this->$em->persist($set);
+            }
+        }
     }
 }

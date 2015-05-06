@@ -16,6 +16,8 @@ class ImportCommand extends ContainerAwareCommand
     /** @var  EntityManager $em */
     protected $em;
 
+    protected $isDebug = true;
+
     protected function configure()
     {
         $this
@@ -29,6 +31,7 @@ class ImportCommand extends ContainerAwareCommand
         $this->em = $this->getContainer()->get("doctrine.orm.default_entity_manager");
 
         $output->writeln('<info>Downloading json file</info>');
+
         $download = file_get_contents('http://mtgjson.com/json/AllSets.json');
 
         if ($download === false) {
@@ -37,7 +40,7 @@ class ImportCommand extends ContainerAwareCommand
         } else {
             $output->writeln('<info>Download successful</info>');
             $data = json_decode($download, true);
-            file_put_contents('arraycards.txt', print_r($data, true));
+            file_put_contents('cachecards.txt', print_r($data, true));
         }
 
         foreach ($data as $content) {

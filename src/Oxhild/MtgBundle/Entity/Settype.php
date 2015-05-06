@@ -4,9 +4,9 @@ namespace Oxhild\MtgBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
- * @ORM\Table(name="supertypes")
+ * @ORM\Table(name="set_types")
  */
-class Supertype
+class Settype
 {
     /**
      * @ORM\Id
@@ -33,7 +33,7 @@ class Supertype
      * Set name
      *
      * @param string $name
-     * @return Supertype
+     * @return Settype
      */
     public function setName($name)
     {

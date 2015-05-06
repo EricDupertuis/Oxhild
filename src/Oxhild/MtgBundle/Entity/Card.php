@@ -112,6 +112,13 @@ class Card
      * @ORM\Column(type="string")
      */
     protected $image_name;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Oxhild\MtgBundle\Entity\Set")
+     * @ORM\JoinColumn(name="set_id", referencedColumnName="id")
+     */
+    protected $set;
+
     /**
      * Constructor
      */
@@ -596,5 +603,28 @@ class Card
     public function getLayout()
     {
         return $this->layout;
+    }
+
+    /**
+     * Set set
+     *
+     * @param \Oxhild\MtgBundle\Entity\Set $set
+     * @return Card
+     */
+    public function setSet(\Oxhild\MtgBundle\Entity\Set $set = null)
+    {
+        $this->set = $set;
+
+        return $this;
+    }
+
+    /**
+     * Get set
+     *
+     * @return \Oxhild\MtgBundle\Entity\Set 
+     */
+    public function getSet()
+    {
+        return $this->set;
     }
 }

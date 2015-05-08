@@ -66,14 +66,13 @@ class ImportCommand extends ContainerAwareCommand
             if (!$exists) {
                 $set = new Set();
 
-                $set->setName($content['name']);
-                $set->setCode($content['code']);
-                $set->setGathererCode($content['gathererCode']);
-                $set->setMagicCardsInfoCode($content['magicCardsInfoCode]']);
-                $set->setBorders($content['border']);
-                $set->setType($content['type']);
+                $set->setName($content['name'])
+                    ->setCode($content['code'])
+                    ->setGathererCode($content['gathererCode'])
+                    ->setMagicCardsInfoCode($content['magicCardsInfoCode]'])
+                    ->setBorders($content['border'])
+                    ->setType($content['type']);
 
-                print_r($set);
             }
         }
     }

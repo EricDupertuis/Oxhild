@@ -41,10 +41,10 @@ class ImportCommand extends ContainerAwareCommand
             } else {
                 $output->writeln('<info>Download successful</info>');
                 $data = json_decode($download, true);
-                file_put_contents('cachecards', serialize($data));
+                file_put_contents('cachecards.cache', serialize($data));
             }
         } else {
-            $download = unserialize(file_get_contents("cachecards"));
+            $download = unserialize(file_get_contents("cachecards.cache"));
 
             if ($download === false) {
                 $output->writeln('<error>Oups, Something went wrong. Debug mode is active</error>');

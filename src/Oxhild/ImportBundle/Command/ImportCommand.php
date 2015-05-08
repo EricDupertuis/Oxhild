@@ -73,6 +73,15 @@ class ImportCommand extends ContainerAwareCommand
                     ->setBorders($content['border'])
                     ->setType($content['type']);
 
+                $this->$em->persist($set);
+                $this->$em->flush();
+
+                foreach ($content['cards'] as $cardData) {
+                    $card = new Card();
+
+                    $card->setName($cardData['name'])
+                        ->setType($cardData['type'];
+                }
             }
         }
     }

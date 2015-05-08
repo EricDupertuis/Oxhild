@@ -16,7 +16,7 @@ class ImportCommand extends ContainerAwareCommand
     /** @var  EntityManager $em */
     protected $em;
 
-    protected $isDebug = true;
+    protected $isDebug = true; // put false if you have active internet connection
 
     protected function configure()
     {
@@ -41,10 +41,10 @@ class ImportCommand extends ContainerAwareCommand
             } else {
                 $output->writeln('<info>Download successful</info>');
                 $data = json_decode($download, true);
-                file_put_contents('cachecards.txt', print_r($data, true));
+                file_put_contents('cachecards', serialize($data));
             }
         } else {
-            $download = file_get_contents("cachecards.txt");
+            $download = unserialize(file_get_contents("cachecards"));
 
             if ($download === false) {
                 $output->writeln('<error>Oups, Something went wrong. Debug mode is active</error>');

@@ -32,15 +32,27 @@ class ImportCommand extends ContainerAwareCommand
 
         $output->writeln('<info>Downloading json file</info>');
 
-        $download = file_get_contents('http://mtgjson.com/json/AllSets.json');
+        if ($this->isDebug === false) {
+            $download = file_get_contents('http://mtgjson.com/json/AllSets.json');
 
-        if ($download === false) {
-            $output->writeln('<error>Oups, file not find. Check your internet connection</error>');
-            die;
+            if ($download === false) {
+                $output->writeln('<error>Oups, file not find. Check your internet connection</error>');
+                die;
+            } else {
+                $output->writeln('<info>Download successful</info>');
+                $data = json_decode($download, true);
+                file_put_contents('cachecards.txt', print_r($data, true));
+            }
         } else {
-            $output->writeln('<info>Download successful</info>');
-            $data = json_decode($download, true);
-            file_put_contents('cachecards.txt', print_r($data, true));
+            $download = file_get_contents("cachecards.txt");
+
+            if ($download === false) {
+                $output->writeln('<error>Oups, Something went wrong. Debug mode is active</error>');
+                die;
+            } else {
+                $output->writeln('<info>Download successful</info>');
+                $data = $download;
+            }
         }
 
         foreach ($data as $content) {
@@ -61,7 +73,7 @@ class ImportCommand extends ContainerAwareCommand
                 $set->setBorders($content['border']);
                 $set->setType($content['type']);
 
-                $this->$em->persist($set);
+                print_r($set);
             }
         }
     }

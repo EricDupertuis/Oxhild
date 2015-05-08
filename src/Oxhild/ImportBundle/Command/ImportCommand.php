@@ -79,8 +79,12 @@ class ImportCommand extends ContainerAwareCommand
                 foreach ($content['cards'] as $cardData) {
                     $card = new Card();
 
-                    $card->setName($cardData['name'])
-                        ->setType($cardData['type']);
+                    $card->addLayout($cardDatad['layout'])
+                        ->setType($cardData['type'])
+                        ->setMultiverseid($cardData['multiverseid'])
+                        ->setName($cardData['name'])
+                        ->setCmc($cardData['cmc'])
+                        ->setRarity($cardData['rarity']);
                 }
             }
         }

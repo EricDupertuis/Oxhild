@@ -80,7 +80,7 @@ class ImportCommand extends ContainerAwareCommand
                     $card = new Card();
 
                     $card->setName($cardData['name'])
-                        ->setType($cardData['type'];
+                        ->setType($cardData['type']);
                 }
             }
         }

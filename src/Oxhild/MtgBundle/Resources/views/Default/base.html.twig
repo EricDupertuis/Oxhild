@@ -18,7 +18,9 @@
     <body>
         Hello World, this is doge
         {% block javascripts %}
-            <script src="{{ asset('js/main.js') }}" type="text/javascript"></script>
+            {% javascripts '@OxhildMtgBundle/Resources/public/js/*' %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
         {% endblock %}
     </body>
 </html>

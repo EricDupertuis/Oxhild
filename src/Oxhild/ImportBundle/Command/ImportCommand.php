@@ -70,6 +70,7 @@ class ImportCommand extends ContainerAwareCommand
                     ->setCode($content['code'])
                     ->setGathererCode($content['gathererCode'])
                     ->setMagicCardsInfoCode($content['magicCardsInfoCode]'])
+                    ->setReleaseDate($content['releaseDate'])
                     ->setBorders($content['border'])
                     ->setType($content['type']);
 
@@ -79,12 +80,25 @@ class ImportCommand extends ContainerAwareCommand
                 foreach ($content['cards'] as $cardData) {
                     $card = new Card();
 
-                    $card->addLayout($cardDatad['layout'])
+                    $card->addLayout($cardData['layout'])
                         ->setType($cardData['type'])
+                        ->addType($cardData['types'])
+                        ->addColor($cardData['colors'])
                         ->setMultiverseid($cardData['multiverseid'])
                         ->setName($cardData['name'])
+                        ->addSubtype($cardData['subtypes'])
                         ->setCmc($cardData['cmc'])
-                        ->setRarity($cardData['rarity']);
+                        ->setRarity($cardData['rarity'])
+                        ->setArtist($cardData['artist'])
+                        ->setPower($cardData['power'])
+                        ->setToughness($cardData['toughness'])
+                        ->setManaCost($cardData['manaCost'])
+                        ->setText($cardData['text'])
+                        ->setFlavor($cardData['flavor'])
+                        ->setImageName($cardData['imageName']);
+
+                    $this->$em->persist($card);
+                    $this->$em->flush();
                 }
             }
         }

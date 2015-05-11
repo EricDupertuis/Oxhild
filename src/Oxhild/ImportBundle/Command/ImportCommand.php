@@ -16,7 +16,7 @@ class ImportCommand extends ContainerAwareCommand
     /** @var  EntityManager $em */
     protected $em;
 
-    protected $isDebug = true; // put false if you have active internet connection
+    protected $isDebug = false; // put false if you have active internet connection
 
     protected function configure()
     {

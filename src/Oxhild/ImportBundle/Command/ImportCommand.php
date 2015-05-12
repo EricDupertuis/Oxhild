@@ -9,6 +9,7 @@ use Symfony\Component\Console\Helper\ProgressBar;
 use Doctrine\ORM\EntityManager;
 use Oxhild\MtgBundle\Entity\Card;
 use Oxhild\MtgBundle\Entity\Set;
+use Oxhild\MtgBundle\Entity\Settype;
 
 class ImportCommand extends ContainerAwareCommand
 {
@@ -29,6 +30,7 @@ class ImportCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->em = $this->getContainer()->get("doctrine.orm.default_entity_manager");
+        $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
 
         $output->writeln('<info>Downloading json file</info>');
 
@@ -58,24 +60,44 @@ class ImportCommand extends ContainerAwareCommand
         foreach ($data as $content) {
             // Import set first
 
-            $check = $this->$em->getRepository('OxhildMtgBundle:Set');
-            $exists = $check->findBy(
+            $exists = $this->em->getRepository('OxhildMtgBundle:Set')->findBy(
                 array('name' => $content['name'])
             );
 
-            if (!$exists) {
+            if ($exists == null) {
+
+                $output->writeln('<info>Set not found, adding to database</info>');
+
                 $set = new Set();
+                $settype = new Settype();
+
+                $type = $this->em->getRepository('OxhildMtgBundle:Settype')->findBy(
+                    array('name' => $content['type'])
+                );
+
+                if ($type == null) {
+                    $output->writeln('<info>Set type not found, adding to database</info>');
+
+                    $settype->setName($content['type']);
+                    $this->em->persist($settype);
+                    $this->em->flush();
+
+                    $type = $this->em->getRepository('OxhildMtgBundle:Settype')->findOneBy(["name" => $content['type']]);
+                } else {
+                    $output->writeln('<info>Set type exists, skipping</info>');
+                    $type = $this->em->getRepository('OxhildMtgBundle:Settype')->findOneBy(["name" => $content['type']]);
+                }
 
                 $set->setName($content['name'])
                     ->setCode($content['code'])
                     ->setGathererCode($content['gathererCode'])
-                    ->setMagicCardsInfoCode($content['magicCardsInfoCode]'])
+                    ->setMagicCardsInfoCode($content['magicCardsInfoCode'])
                     ->setReleaseDate($content['releaseDate'])
                     ->setBorders($content['border'])
-                    ->setType($content['type']);
+                    ->setType($type);
 
-                $this->$em->persist($set);
-                $this->$em->flush();
+                $this->em->persist($set);
+                $this->em->flush();
 
                 foreach ($content['cards'] as $cardData) {
                     $card = new Card();
@@ -97,8 +119,8 @@ class ImportCommand extends ContainerAwareCommand
                         ->setFlavor($cardData['flavor'])
                         ->setImageName($cardData['imageName']);
 
-                    $this->$em->persist($card);
-                    $this->$em->flush();
+                    $this->em->persist($card);
+                    $this->em->flush();
                 }
             }
         }

@@ -35,7 +35,8 @@ class Set
     protected $magicCardsInfoCode;
 
     /**
-     * @ORM\Column(type="date")
+     * @var \DateTime
+     * @ORM\Column(type="date", nullable=false)
      */
     protected $releaseDate;
 

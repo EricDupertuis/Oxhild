@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManager;
 use Oxhild\MtgBundle\Entity\Card;
 use Oxhild\MtgBundle\Entity\Set;
 use Oxhild\MtgBundle\Entity\Settype;
+use \DateTime;
 
 class ImportCommand extends ContainerAwareCommand
 {
@@ -88,11 +89,13 @@ class ImportCommand extends ContainerAwareCommand
                     $type = $this->em->getRepository('OxhildMtgBundle:Settype')->findOneBy(["name" => $content['type']]);
                 }
 
+                $date = new DateTime($content['releaseDate']);
+
                 $set->setName($content['name'])
                     ->setCode($content['code'])
                     ->setGathererCode($content['gathererCode'])
                     ->setMagicCardsInfoCode($content['magicCardsInfoCode'])
-                    ->setReleaseDate($content['releaseDate'])
+                    ->setReleaseDate($date)
                     ->setBorders($content['border'])
                     ->setType($type);
 

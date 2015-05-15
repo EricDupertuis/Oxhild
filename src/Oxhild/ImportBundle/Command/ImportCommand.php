@@ -2,6 +2,7 @@
 
 namespace Oxhild\ImportBundle\Command;
 
+use Oxhild\MtgBundle\Entity\Type;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -11,6 +12,7 @@ use Oxhild\MtgBundle\Entity\Card;
 use Oxhild\MtgBundle\Entity\Set;
 use Oxhild\MtgBundle\Entity\Settype;
 use Oxhild\MtgBundle\Entity\Layout;
+use Oxhild\MtgBundle\Entity\Type;
 use \DateTime;
 
 class ImportCommand extends ContainerAwareCommand
@@ -62,11 +64,11 @@ class ImportCommand extends ContainerAwareCommand
         foreach ($data as $content) {
             // Import set first
 
-            $exists = $this->em->getRepository('OxhildMtgBundle:Set')->findBy(
+            $exist = $this->em->getRepository('OxhildMtgBundle:Set')->findBy(
                 array('name' => $content['name'])
             );
 
-            if ($exists == null) {
+            if ($exist == null) {
 
                 $output->writeln('<info>Set not found, adding to database</info>');
 
@@ -118,6 +120,15 @@ class ImportCommand extends ContainerAwareCommand
 
                     } else {
                         $layout = $this->em->getRepository('OxhildMtgBundle:Layout')->findOneBy(["name" => $cardData['layout']]);
+                    }
+
+                    foreach ($cardData['types'] as $type) {
+                        $newType = new Type();
+                        $exist = $this->em->getRepository('OxhildMtgBundle:Type')->findOneBy(["name" => $type]);
+
+                        if ($exist == null) {
+                            $newType->setName($type);
+                        }
                     }
 
                     $card->addLayout($layout)

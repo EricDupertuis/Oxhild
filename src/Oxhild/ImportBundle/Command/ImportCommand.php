@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManager;
 use Oxhild\MtgBundle\Entity\Card;
 use Oxhild\MtgBundle\Entity\Set;
 use Oxhild\MtgBundle\Entity\Settype;
+use Oxhild\MtgBundle\Entity\Layout;
 use \DateTime;
 
 class ImportCommand extends ContainerAwareCommand
@@ -18,7 +19,7 @@ class ImportCommand extends ContainerAwareCommand
     /** @var  EntityManager $em */
     protected $em;
 
-    protected $isDebug = false; // put false if you have active internet connection
+    protected $isDebug = true; // put false if you have active internet connection, allows offline dev
 
     protected function configure()
     {
@@ -105,7 +106,21 @@ class ImportCommand extends ContainerAwareCommand
                 foreach ($content['cards'] as $cardData) {
                     $card = new Card();
 
-                    $card->addLayout($cardData['layout'])
+                    $layout = $this->em->getRepository('OxhildMtgBundle:Layout')->findOneBy(["name" => $cardData['layout']]);
+
+                    if ($layout === null) {
+                        $newLayout = new Layout();
+                        $newLayout->setName($cardData['layout']);
+                        $this->em->persist($newLayout);
+                        $this->em->flush();
+
+                        $layout = $this->em->getRepository('OxhildMtgBundle:Layout')->findOneBy(["name" => $cardData['layout']]);
+
+                    } else {
+                        $layout = $this->em->getRepository('OxhildMtgBundle:Layout')->findOneBy(["name" => $cardData['layout']]);
+                    }
+
+                    $card->addLayout($layout)
                         ->setType($cardData['type'])
                         ->addType($cardData['types'])
                         ->addColor($cardData['colors'])

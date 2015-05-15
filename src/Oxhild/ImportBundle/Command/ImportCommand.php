@@ -2,7 +2,6 @@
 
 namespace Oxhild\ImportBundle\Command;
 
-use Oxhild\MtgBundle\Entity\Type;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -121,19 +120,23 @@ class ImportCommand extends ContainerAwareCommand
                     } else {
                         $layout = $this->em->getRepository('OxhildMtgBundle:Layout')->findOneBy(["name" => $cardData['layout']]);
                     }
-
+                    $addType = new Type();
                     foreach ($cardData['types'] as $type) {
                         $newType = new Type();
                         $exist = $this->em->getRepository('OxhildMtgBundle:Type')->findOneBy(["name" => $type]);
 
                         if ($exist == null) {
                             $newType->setName($type);
+                            $this->em->persist($newType);
+                            $this->em->flush();
+                            $exist = $this->em->getRepository('OxhildMtgBundle:Type')->findOneBy(["name" => $type]);
                         }
+
+                        $card->addType($exist);
                     }
 
                     $card->addLayout($layout)
                         ->setType($cardData['type'])
-                        ->addType($cardData['types'])
                         ->addColor($cardData['colors'])
                         ->setMultiverseid($cardData['multiverseid'])
                         ->setName($cardData['name'])

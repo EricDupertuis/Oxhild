@@ -107,6 +107,8 @@ class ImportCommand extends ContainerAwareCommand
                 foreach ($content['cards'] as $cardData) {
                     $card = new Card();
 
+                    // Layout
+
                     $layout = $this->em->getRepository('OxhildMtgBundle:Layout')->findOneBy(["name" => $cardData['layout']]);
 
                     if ($layout === null) {
@@ -120,7 +122,23 @@ class ImportCommand extends ContainerAwareCommand
                     } else {
                         $layout = $this->em->getRepository('OxhildMtgBundle:Layout')->findOneBy(["name" => $cardData['layout']]);
                     }
-                    
+
+                    // End Layout
+
+                    // Type
+
+                    foreach($cardData['types'] as $cardType) {
+                        $searchType = $this->em->getRepository('OxhildMtgBundle:Type')->findOneBy(['name' => $cardType]);
+
+                        if ($searchType == null) {
+                            $newType = new Type();
+                            $newType->setName($cardType);
+                            $this->em->persist($newType);
+                            $this->em->flush();
+                        }
+                    }
+
+                    // End Type
 
                     $card->addLayout($layout)
                         ->setType($cardData['type'])

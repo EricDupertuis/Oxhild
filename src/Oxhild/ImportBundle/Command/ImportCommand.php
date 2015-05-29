@@ -2,6 +2,8 @@
 
 namespace Oxhild\ImportBundle\Command;
 
+use Oxhild\MtgBundle\Entity\Subtype;
+use Proxies\__CG__\Oxhild\MtgBundle\Entity\Color;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -12,6 +14,7 @@ use Oxhild\MtgBundle\Entity\Set;
 use Oxhild\MtgBundle\Entity\Settype;
 use Oxhild\MtgBundle\Entity\Layout;
 use Oxhild\MtgBundle\Entity\Type;
+use Oxhild\MtgBundle\Entity\Color as MtgColor;
 use \DateTime;
 
 class ImportCommand extends ContainerAwareCommand
@@ -20,7 +23,7 @@ class ImportCommand extends ContainerAwareCommand
     /** @var  EntityManager $em */
     protected $em;
 
-    protected $isDebug = false; // put false if you have active internet connection, allows offline dev
+    protected $isDebug = true; // put false if you have active internet connection, allows offline dev
 
     protected function configure()
     {
@@ -107,7 +110,6 @@ class ImportCommand extends ContainerAwareCommand
                     $card = new Card();
 
                     // Layout
-
                     $layout = $this->em->getRepository('OxhildMtgBundle:Layout')->findOneBy(["name" => $cardData['layout']]);
 
                     if ($layout === null) {
@@ -118,31 +120,52 @@ class ImportCommand extends ContainerAwareCommand
                     } else {
                         $layout = $this->em->getRepository('OxhildMtgBundle:Layout')->findOneBy(["name" => $cardData['layout']]);
                     }
-
                     // End Layout
 
                     // Type
-
                     foreach($cardData['types'] as $cardType) {
 
                         $searchType = $this->em->getRepository('OxhildMtgBundle:Type')->findOneBy(['name' => $cardType]);
 
-                        if ($searchType == null) {
+                        if ($searchType === null) {
                             $newType = new Type();
                             $newType->setName($cardType);
                             $this->em->persist($newType);
 
-                            $card->addType($cardType);
+                            $card->addType($newType);
                         } else {
                             $card->addType($cardType);
                         }
                     }
-
                     // End Type
 
+                    //Colors
+                    foreach($cardData['colors'] as $color) {
+                        $searchColor = $this->em->getRepository('OxhildMtgBundle:Color')->findOneBy(['color' => $color]);
+
+                        if ($searchColor === null) {
+                            $newColor = new MtgColor();
+                            $newColor->setColor($color);
+                            $this->em->persist($newColor);
+                            $card->addColor($newColor);
+                        } else {
+                            $card->addColor($searchColor);
+                        }
+                    }
+                    // End Colors
+
+                    // Subtypes
+                    foreach ($cardData['subtypes'] as $subtype) {
+                        $searchSubt = $this->em->getRepository('OxhildMtgBundle:Color')->findOneBy(['name' => $subtype]);
+
+                        if ($searchSubt === null) {
+                            $newSubtype = new Subtype();
+
+                        }
+                    }
+                    // End Subtypes
                     $card->addLayout($layout)
                         ->setType($cardData['type'])
-                        ->addColor($cardData['colors'])
                         ->setMultiverseid($cardData['multiverseid'])
                         ->setName($cardData['name'])
                         ->addSubtype($cardData['subtypes'])

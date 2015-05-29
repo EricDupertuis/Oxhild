@@ -20,7 +20,7 @@ class ImportCommand extends ContainerAwareCommand
     /** @var  EntityManager $em */
     protected $em;
 
-    protected $isDebug = true; // put false if you have active internet connection, allows offline dev
+    protected $isDebug = false; // put false if you have active internet connection, allows offline dev
 
     protected function configure()
     {
@@ -83,7 +83,6 @@ class ImportCommand extends ContainerAwareCommand
 
                     $settype->setName($content['type']);
                     $this->em->persist($settype);
-                    $this->em->flush();
 
                     $type = $this->em->getRepository('OxhildMtgBundle:Settype')->findOneBy(["name" => $content['type']]);
                 } else {
@@ -102,8 +101,8 @@ class ImportCommand extends ContainerAwareCommand
                     ->setType($type);
 
                 $this->em->persist($set);
-                $this->em->flush();
 
+                //then add cards
                 foreach ($content['cards'] as $cardData) {
                     $card = new Card();
 
@@ -115,9 +114,6 @@ class ImportCommand extends ContainerAwareCommand
                         $newLayout = new Layout();
                         $newLayout->setName($cardData['layout']);
                         $this->em->persist($newLayout);
-                        $this->em->flush();
-
-                        $layout = $this->em->getRepository('OxhildMtgBundle:Layout')->findOneBy(["name" => $cardData['layout']]);
 
                     } else {
                         $layout = $this->em->getRepository('OxhildMtgBundle:Layout')->findOneBy(["name" => $cardData['layout']]);
@@ -128,13 +124,17 @@ class ImportCommand extends ContainerAwareCommand
                     // Type
 
                     foreach($cardData['types'] as $cardType) {
+
                         $searchType = $this->em->getRepository('OxhildMtgBundle:Type')->findOneBy(['name' => $cardType]);
 
                         if ($searchType == null) {
                             $newType = new Type();
                             $newType->setName($cardType);
                             $this->em->persist($newType);
-                            $this->em->flush();
+
+                            $card->addType($cardType);
+                        } else {
+                            $card->addType($cardType);
                         }
                     }
 

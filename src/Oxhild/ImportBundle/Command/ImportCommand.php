@@ -98,9 +98,14 @@ class ImportCommand extends ContainerAwareCommand
 
                 $set->setName($content['name'])
                     ->setCode($content['code'])
-                    ->setMagicCardsInfoCode($content['magicCardsInfoCode'])
                     ->setReleaseDate($date)
                     ->setBorders($content['border']);
+
+                if (isset($content['magicCardsInfoCode'])) {
+                    $set->setMagicCardsInfoCode($content['magicCardsInfoCode']);
+                } else {
+                    $set->setMagicCardsInfoCode(null);
+                }
 
                 if (isset($content['gathererCode'])) {
                     $set->setGathererCode($content['gathererCode']);

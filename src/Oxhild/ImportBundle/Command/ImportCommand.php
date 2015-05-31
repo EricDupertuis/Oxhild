@@ -68,18 +68,18 @@ class ImportCommand extends ContainerAwareCommand
         foreach ($data as $content) {
             // Import set first
 
-            $exist = $this->em->getRepository('OxhildMtgBundle:Set')->findBy(
+            $exist = $this->em->getRepository('OxhildMtgBundle:Set')->findOneBy(
                 array('name' => $content['name'])
             );
 
-            if ($exist == null) {
+            if ($exist === null) {
 
                 $output->writeln('<info>Set not found, adding to database</info>');
 
                 $set = new Set();
                 $settype = new Settype();
 
-                $type = $this->em->getRepository('OxhildMtgBundle:Settype')->findBy(
+                $type = $this->em->getRepository('OxhildMtgBundle:Settype')->findOneBy(
                     array('name' => $content['type'])
                 );
 
@@ -174,7 +174,7 @@ class ImportCommand extends ContainerAwareCommand
                                 $this->em->persist($newSubtype);
                                 $card->addSubtype($newSubtype);
                             } else {
-                                $card->addColor($searchSubt);
+                                $card->addSubtype($searchSubt);
                             }
                         }
                     }
@@ -209,18 +209,48 @@ class ImportCommand extends ContainerAwareCommand
                     $card->setType($cardData['type'])
                         ->setMultiverseid($cardData['multiverseid'])
                         ->setName($cardData['name'])
-                        ->setCmc($cardData['cmc'])
-                        ->setPower($cardData['power'])
-                        ->setToughness($cardData['toughness'])
-                        ->setManaCost($cardData['manaCost'])
-                        ->setText($cardData['text'])
-                        ->setFlavor($cardData['flavor'])
                         ->setImageName($cardData['imageName']);
 
                     if (isset($cardData['number'])) {
                         $card->setNumber($cardData['number']);
                     } else {
                         $card->setNumber(null);
+                    }
+
+                    if (isset($cardData['power'])) {
+                        $card->setPower($cardData['power']);
+                    } else {
+                        $card->setPower(null);
+                    }
+
+                    if (isset($cardData['toughness'])) {
+                        $card->setToughness($cardData['toughness']);
+                    } else {
+                        $card->setToughness(null);
+                    }
+
+                    if (isset($cardData['flavor'])) {
+                        $card->setFlavor($cardData['flavor']);
+                    } else {
+                        $card->setFlavor(null);
+                    }
+
+                    if (isset($cardData['text'])) {
+                        $card->setText($cardData['text']);
+                    } else {
+                        $card->setText(null);
+                    }
+
+                    if (isset($cardData['cmc'])) {
+                        $card->setCmc($cardData['cmc']);
+                    } else {
+                        $card->setCmc(0);
+                    }
+
+                    if (isset($cardData['manaCost'])) {
+                        $card->setManaCost($cardData['manaCost']);
+                    } else {
+                        $card->setManaCost(0);
                     }
 
                     $this->em->persist($card);

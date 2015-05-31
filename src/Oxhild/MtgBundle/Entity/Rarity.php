@@ -21,11 +21,6 @@ class Rarity
     protected $rarity;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     */
-    protected $color;
-
-    /**
      * Get id
      *
      * @return integer 
@@ -56,28 +51,5 @@ class Rarity
     public function getRarity()
     {
         return $this->rarity;
-    }
-
-    /**
-     * Set color
-     *
-     * @param string $color
-     * @return Rarity
-     */
-    public function setColor($color)
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
-    /**
-     * Get color
-     *
-     * @return string 
-     */
-    public function getColor()
-    {
-        return $this->color;
     }
 }

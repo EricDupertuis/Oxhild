@@ -2,6 +2,8 @@
 
 namespace Oxhild\ImportBundle\Command;
 
+use Oxhild\MtgBundle\Entity\Artist;
+use Oxhild\MtgBundle\Entity\Rarity;
 use Oxhild\MtgBundle\Entity\Subtype;
 use Proxies\__CG__\Oxhild\MtgBundle\Entity\Color;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -155,33 +157,64 @@ class ImportCommand extends ContainerAwareCommand
                     // End Colors
 
                     // Subtypes
-                    foreach ($cardData['subtypes'] as $subtype) {
-                        $searchSubt = $this->em->getRepository('OxhildMtgBundle:Color')->findOneBy(['name' => $subtype]);
+                    if (isset($cardData['subtypes'])) {
+                        foreach ($cardData['subtypes'] as $subtype) {
+                            $searchSubt = $this->em->getRepository('OxhildMtgBundle:Subtype')->findOneBy(['name' => $subtype]);
 
-                        if ($searchSubt === null) {
-                            $newSubtype = new Subtype();
-                            $newSubtype->setName($subtype);
-                            $this->em->persist($newSubtype);
-                            $card->addSubtype($newSubtype);
-                        } else {
-                            $card->addColor($searchSubt);
+                            if ($searchSubt === null) {
+                                $newSubtype = new Subtype();
+                                $newSubtype->setName($subtype);
+                                $this->em->persist($newSubtype);
+                                $card->addSubtype($newSubtype);
+                            } else {
+                                $card->addColor($searchSubt);
+                            }
                         }
                     }
                     // End Subtypes
-                    $card->addLayout($layout)
-                        ->setType($cardData['type'])
+
+                    // Rarity
+                    $searchRarity = $this->em->getRepository('OxhildMtgBundle:Rarity')->findOneBy(['rarity' => $cardData['rarity']]);
+
+                    if ($searchRarity === null) {
+                        $newRarity = new Rarity();
+                        $newRarity->setRarity($cardData['rarity']);
+                        $this->em->persist($newRarity);
+                        $card->setRarity($newRarity);
+                    } else {
+                        $card->setRarity($searchRarity);
+                    }
+                    // End Rarity
+
+                    // Artist
+                    $searchArtist = $this->em->getRepository('OxhildMtgBundle:Artist')->findOneBy(['name' => $cardData['artist']]);
+
+                    if ($searchArtist === null) {
+                        $newArtist = new Artist();
+                        $newArtist->setName($cardData['artist']);
+                        $this->em->persist($newArtist);
+                        $card->setArtist($newArtist);
+                    } else {
+                        $card->setArtist($searchArtist);
+                    }
+                    // End Artist
+
+                    $card->setType($cardData['type'])
                         ->setMultiverseid($cardData['multiverseid'])
                         ->setName($cardData['name'])
-                        ->addSubtype($cardData['subtypes'])
                         ->setCmc($cardData['cmc'])
-                        ->setRarity($cardData['rarity'])
-                        ->setArtist($cardData['artist'])
                         ->setPower($cardData['power'])
                         ->setToughness($cardData['toughness'])
                         ->setManaCost($cardData['manaCost'])
                         ->setText($cardData['text'])
                         ->setFlavor($cardData['flavor'])
                         ->setImageName($cardData['imageName']);
+
+                    if (isset($cardData['number'])) {
+                        $card->setNumber($cardData['number']);
+                    } else {
+                        $card->setNumber(null);
+                    }
 
                     $this->em->persist($card);
                     $this->em->flush();

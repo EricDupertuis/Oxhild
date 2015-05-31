@@ -30,7 +30,7 @@ class Set
     protected $gathererCode;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     protected $magicCardsInfoCode;
 

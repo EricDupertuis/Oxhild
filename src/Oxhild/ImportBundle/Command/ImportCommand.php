@@ -254,8 +254,11 @@ class ImportCommand extends ContainerAwareCommand
                     }
 
                     $this->em->persist($card);
+                    $output->writeln('<info>Added card '.$cardData['name'].'</info>');
                     $this->em->flush();
                 }
+            } else {
+                $output->writeln('<info>Set exists, skipping</info>');
             }
         }
     }

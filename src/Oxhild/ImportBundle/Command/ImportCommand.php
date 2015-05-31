@@ -25,7 +25,7 @@ class ImportCommand extends ContainerAwareCommand
     /** @var  EntityManager $em */
     protected $em;
 
-    protected $isDebug = false; // put false if you have active internet connection, allows offline dev
+    protected $isDebug = true; // put false if you have active internet connection, allows offline dev
 
     protected function configure()
     {
@@ -99,11 +99,16 @@ class ImportCommand extends ContainerAwareCommand
 
                 $set->setName($content['name'])
                     ->setCode($content['code'])
-                    ->setGathererCode($content['gathererCode'])
                     ->setMagicCardsInfoCode($content['magicCardsInfoCode'])
                     ->setReleaseDate($date)
                     ->setBorders($content['border'])
                     ->setType($type);
+
+                if (isset($content['gathererCode'])) {
+                    $set->setGathererCode($content['gathererCode']);
+                } else {
+                    $set->setGathererCode(null);
+                }
 
                 $this->em->persist($set);
 
@@ -142,16 +147,18 @@ class ImportCommand extends ContainerAwareCommand
                     // End Type
 
                     //Colors
-                    foreach($cardData['colors'] as $color) {
-                        $searchColor = $this->em->getRepository('OxhildMtgBundle:Color')->findOneBy(['color' => $color]);
+                    if  (isset($cardData['colors'])) {
+                        foreach($cardData['colors'] as $color) {
+                            $searchColor = $this->em->getRepository('OxhildMtgBundle:Color')->findOneBy(['color' => $color]);
 
-                        if ($searchColor === null) {
-                            $newColor = new MtgColor();
-                            $newColor->setColor($color);
-                            $this->em->persist($newColor);
-                            $card->addColor($newColor);
-                        } else {
-                            $card->addColor($searchColor);
+                            if ($searchColor === null) {
+                                $newColor = new MtgColor();
+                                $newColor->setColor($color);
+                                $this->em->persist($newColor);
+                                $card->addColor($newColor);
+                            } else {
+                                $card->addColor($searchColor);
+                            }
                         }
                     }
                     // End Colors

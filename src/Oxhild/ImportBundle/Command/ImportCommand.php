@@ -92,7 +92,6 @@ class ImportCommand extends ContainerAwareCommand
                     $type = $this->em->getRepository('OxhildMtgBundle:Settype')->findOneBy(["name" => $content['type']]);
                 } else {
                     $output->writeln('<info>Set type exists, skipping</info>');
-                    $type = $this->em->getRepository('OxhildMtgBundle:Settype')->findOneBy(["name" => $content['type']]);
                 }
 
                 $date = new DateTime($content['releaseDate']);
@@ -102,7 +101,7 @@ class ImportCommand extends ContainerAwareCommand
                     ->setMagicCardsInfoCode($content['magicCardsInfoCode'])
                     ->setReleaseDate($date)
                     ->setBorders($content['border'])
-                    ->setType($type);
+                    ->setType($settype);
 
                 if (isset($content['gathererCode'])) {
                     $set->setGathererCode($content['gathererCode']);
@@ -209,7 +208,8 @@ class ImportCommand extends ContainerAwareCommand
                     $card->setType($cardData['type'])
                         ->setMultiverseid($cardData['multiverseid'])
                         ->setName($cardData['name'])
-                        ->setImageName($cardData['imageName']);
+                        ->setImageName($cardData['imageName'])
+                        ->setSet($set);
 
                     if (isset($cardData['number'])) {
                         $card->setNumber($cardData['number']);

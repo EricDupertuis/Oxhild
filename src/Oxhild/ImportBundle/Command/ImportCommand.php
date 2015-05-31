@@ -68,11 +68,11 @@ class ImportCommand extends ContainerAwareCommand
         foreach ($data as $content) {
             // Import set first
 
-            $exist = $this->em->getRepository('OxhildMtgBundle:Set')->findOneBy(
+            $searchSet = $this->em->getRepository('OxhildMtgBundle:Set')->findOneBy(
                 array('name' => $content['name'])
             );
 
-            if ($exist === null) {
+            if ($searchSet === null) {
 
                 $output->writeln('<info>Set not found, adding to database</info>');
 
@@ -83,15 +83,15 @@ class ImportCommand extends ContainerAwareCommand
                     array('name' => $content['type'])
                 );
 
-                if ($type == null) {
+                if ($type === null) {
                     $output->writeln('<info>Set type not found, adding to database</info>');
 
                     $settype->setName($content['type']);
                     $this->em->persist($settype);
-
-                    $type = $this->em->getRepository('OxhildMtgBundle:Settype')->findOneBy(["name" => $content['type']]);
+                    $set->setType($settype);
                 } else {
                     $output->writeln('<info>Set type exists, skipping</info>');
+                    $set->setType($type);
                 }
 
                 $date = new DateTime($content['releaseDate']);
@@ -100,8 +100,7 @@ class ImportCommand extends ContainerAwareCommand
                     ->setCode($content['code'])
                     ->setMagicCardsInfoCode($content['magicCardsInfoCode'])
                     ->setReleaseDate($date)
-                    ->setBorders($content['border'])
-                    ->setType($settype);
+                    ->setBorders($content['border']);
 
                 if (isset($content['gathererCode'])) {
                     $set->setGathererCode($content['gathererCode']);
@@ -206,10 +205,15 @@ class ImportCommand extends ContainerAwareCommand
                     // End Artist
 
                     $card->setType($cardData['type'])
-                        ->setMultiverseid($cardData['multiverseid'])
                         ->setName($cardData['name'])
                         ->setImageName($cardData['imageName'])
                         ->setSet($set);
+
+                    if (isset($cardData['multiverseid'])) {
+                        $card->setMultiverseid($cardData['multiverseid']);
+                    } else {
+                        $card->setMultiverseid(null);
+                    }
 
                     if (isset($cardData['number'])) {
                         $card->setNumber($cardData['number']);

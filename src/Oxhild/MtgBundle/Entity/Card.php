@@ -104,7 +104,7 @@ class Card
     protected $layout;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $multiverseid;
 

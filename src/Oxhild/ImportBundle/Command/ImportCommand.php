@@ -23,7 +23,7 @@ class ImportCommand extends ContainerAwareCommand
     /** @var  EntityManager $em */
     protected $em;
 
-    protected $isDebug = true; // put false if you have active internet connection, allows offline dev
+    protected $isDebug = false; // put false if you have active internet connection, allows offline dev
 
     protected function configure()
     {
@@ -110,15 +110,15 @@ class ImportCommand extends ContainerAwareCommand
                     $card = new Card();
 
                     // Layout
-                    $layout = $this->em->getRepository('OxhildMtgBundle:Layout')->findOneBy(["name" => $cardData['layout']]);
+                    $searchLayout = $this->em->getRepository('OxhildMtgBundle:Layout')->findOneBy(["name" => $cardData['layout']]);
 
-                    if ($layout === null) {
+                    if ($searchLayout === null) {
                         $newLayout = new Layout();
                         $newLayout->setName($cardData['layout']);
                         $this->em->persist($newLayout);
-
+                        $card->addLayout($newLayout);
                     } else {
-                        $layout = $this->em->getRepository('OxhildMtgBundle:Layout')->findOneBy(["name" => $cardData['layout']]);
+                        $card->addLayout($searchLayout);
                     }
                     // End Layout
 
@@ -134,7 +134,7 @@ class ImportCommand extends ContainerAwareCommand
 
                             $card->addType($newType);
                         } else {
-                            $card->addType($cardType);
+                            $card->addType($searchType);
                         }
                     }
                     // End Type
@@ -160,7 +160,11 @@ class ImportCommand extends ContainerAwareCommand
 
                         if ($searchSubt === null) {
                             $newSubtype = new Subtype();
-
+                            $newSubtype->setName($subtype);
+                            $this->em->persist($newSubtype);
+                            $card->addSubtype($newSubtype);
+                        } else {
+                            $card->addColor($searchSubt);
                         }
                     }
                     // End Subtypes

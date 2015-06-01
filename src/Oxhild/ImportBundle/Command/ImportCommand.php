@@ -5,7 +5,6 @@ namespace Oxhild\ImportBundle\Command;
 use Oxhild\MtgBundle\Entity\Artist;
 use Oxhild\MtgBundle\Entity\Rarity;
 use Oxhild\MtgBundle\Entity\Subtype;
-use Proxies\__CG__\Oxhild\MtgBundle\Entity\Color;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -133,18 +132,20 @@ class ImportCommand extends ContainerAwareCommand
                     // End Layout
 
                     // Type
-                    foreach($cardData['types'] as $cardType) {
+                    if (isset($cardData['types'])) {
+                        foreach($cardData['types'] as $cardType) {
 
-                        $searchType = $this->em->getRepository('OxhildMtgBundle:Type')->findOneBy(['name' => $cardType]);
+                            $searchType = $this->em->getRepository('OxhildMtgBundle:Type')->findOneBy(['name' => $cardType]);
 
-                        if ($searchType === null) {
-                            $newType = new Type();
-                            $newType->setName($cardType);
-                            $this->em->persist($newType);
+                            if ($searchType === null) {
+                                $newType = new Type();
+                                $newType->setName($cardType);
+                                $this->em->persist($newType);
 
-                            $card->addType($newType);
-                        } else {
-                            $card->addType($searchType);
+                                $card->addType($newType);
+                            } else {
+                                $card->addType($searchType);
+                            }
                         }
                     }
                     // End Type

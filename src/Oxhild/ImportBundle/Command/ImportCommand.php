@@ -73,7 +73,7 @@ class ImportCommand extends ContainerAwareCommand
 
             if ($searchSet === null) {
 
-                $output->writeln('<info>Set not found, adding to database</info>');
+                $output->writeln('<info> Set not found, adding to database</info>');
 
                 $set = new Set();
                 $settype = new Settype();
@@ -83,13 +83,13 @@ class ImportCommand extends ContainerAwareCommand
                 );
 
                 if ($type === null) {
-                    $output->writeln('<info>Set type not found, adding to database</info>');
+                    $output->writeln('<info> Set type not found, adding to database</info>');
 
                     $settype->setName($content['type']);
                     $this->em->persist($settype);
                     $set->setType($settype);
                 } else {
-                    $output->writeln('<info>Set type exists, skipping</info>');
+                    $output->writeln('<info> Set type exists, skipping</info>');
                     $set->setType($type);
                 }
 
@@ -114,8 +114,14 @@ class ImportCommand extends ContainerAwareCommand
 
                 $this->em->persist($set);
 
+                $progress = new ProgressBar($output, count($content['cards']));
+                $progress->setFormatDefinition('very_verbose', 'Progress: %percent%%');
+
+                $progress->start();
+
                 //then add cards
                 foreach ($content['cards'] as $cardData) {
+
                     $card = new Card();
 
                     // Layout
@@ -264,11 +270,13 @@ class ImportCommand extends ContainerAwareCommand
                     }
 
                     $this->em->persist($card);
-                    $output->writeln('<info>Added card '.$cardData['name'].'</info>');
+                    $output->writeln('<info> Added card '.$cardData['name'].'</info>');
                     $this->em->flush();
+
+                    $progress->advance();
                 }
             } else {
-                $output->writeln('<info>Set exists, skipping</info>');
+                $output->writeln('<info> Set exists, skipping</info>');
             }
         }
     }

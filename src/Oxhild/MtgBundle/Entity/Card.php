@@ -132,6 +132,26 @@ class Card
     }
 
     /**
+     * Get array with specific mana entries from cmc
+     *
+     * @return array
+     */
+    public function getManaArray()
+    {
+        $delimiters = array("{","}");
+        $ready = str_replace($delimiters, $delimiters[0], $this->name);
+        $launch = explode($delimiters[0], $ready);
+
+        $return = array();
+        foreach ($launch as $value) {
+            if (!empty($value)) {
+                $return[] = $value;
+            }
+        }
+        return  $return;
+    }
+
+    /**
      * Get id
      *
      * @return integer 

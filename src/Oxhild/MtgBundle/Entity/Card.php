@@ -32,7 +32,7 @@ class Card
     protected $cmc;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Color", inversedBy="cards")
+     * @ORM\ManyToMany(targetEntity="Color", inversedBy="name")
      * @ORM\JoinTable(name="colors_cards")
      */
     protected $colors;
@@ -43,25 +43,25 @@ class Card
     protected $type;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Supertype", inversedBy="cards")
+     * @ORM\ManyToMany(targetEntity="Supertype", inversedBy="name")
      * @ORM\JoinTable(name="supertypes_cards")
      */
     protected $supertypes;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Type", inversedBy="cards")
+     * @ORM\ManyToMany(targetEntity="Type", inversedBy="name")
      * @ORM\JoinTable(name="types_cards")
      */
     protected $types;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Subtype", inversedBy="cards")
+     * @ORM\ManyToMany(targetEntity="Subtype", inversedBy="name")
      * @ORM\JoinTable(name="subtypes_cards")
      */
     protected $subtypes;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Oxhild\MtgBundle\Entity\Rarity")
+     * @ORM\ManyToOne(targetEntity="Oxhild\MtgBundle\Entity\Rarity", inversedBy="rarity")
      * @ORM\JoinColumn(name="rarity_id", referencedColumnName="id")
      */
     protected $rarity;
@@ -77,7 +77,7 @@ class Card
     protected $flavor;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Oxhild\MtgBundle\Entity\Artist")
+     * @ORM\ManyToOne(targetEntity="Oxhild\MtgBundle\Entity\Artist", inversedBy="name")
      * @ORM\JoinColumn(name="artist_id", referencedColumnName="id")
      */
     protected $artist;
@@ -98,8 +98,8 @@ class Card
     protected $toughness;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Layout", inversedBy="cards")
-     * @ORM\JoinTable(name="layouts_cards")
+     * @ORM\ManyToOne(targetEntity="Layout", inversedBy="name")
+     * @ORM\JoinColumn(name="layout_id", referencedColumnName="id")
      */
     protected $layout;
 
@@ -118,7 +118,6 @@ class Card
      * @ORM\JoinColumn(name="set_id", referencedColumnName="id")
      */
     protected $set;
-
     /**
      * Constructor
      */
@@ -128,7 +127,6 @@ class Card
         $this->supertypes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->types = new \Doctrine\Common\Collections\ArrayCollection();
         $this->subtypes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->layout = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -593,32 +591,22 @@ class Card
     }
 
     /**
-     * Add layout
+     * Set layout
      *
      * @param \Oxhild\MtgBundle\Entity\Layout $layout
      * @return Card
      */
-    public function addLayout(\Oxhild\MtgBundle\Entity\Layout $layout)
+    public function setLayout(\Oxhild\MtgBundle\Entity\Layout $layout = null)
     {
-        $this->layout[] = $layout;
+        $this->layout = $layout;
 
         return $this;
     }
 
     /**
-     * Remove layout
-     *
-     * @param \Oxhild\MtgBundle\Entity\Layout $layout
-     */
-    public function removeLayout(\Oxhild\MtgBundle\Entity\Layout $layout)
-    {
-        $this->layout->removeElement($layout);
-    }
-
-    /**
      * Get layout
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Oxhild\MtgBundle\Entity\Layout 
      */
     public function getLayout()
     {

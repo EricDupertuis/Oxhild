@@ -16,6 +16,7 @@ class Subtype
     protected $id;
     /**
      * @ORM\Column(type="string", length=50)
+     * @ORM\ManyToMany(targetEntity="Card", mappedBy="subtypes")
      */
     protected $name;
 

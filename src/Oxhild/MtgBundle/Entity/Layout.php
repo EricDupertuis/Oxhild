@@ -17,6 +17,7 @@ class Layout
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @ORM\OneToMany(targetEntity="Card", mappedBy="layout")
      */
     protected $name;
 

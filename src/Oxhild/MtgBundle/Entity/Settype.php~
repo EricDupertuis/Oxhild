@@ -14,8 +14,10 @@ class Settype
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * @ORM\Column(type="string", length=50)
+     * @ORM\OneToMany(targetEntity="Set", mappedBy="type")
      */
     protected $name;
 

@@ -16,6 +16,7 @@ class Set
     protected $id;
     /**
      * @ORM\Column(type="string", length=50)
+     * @ORM\OneToMany(targetEntity="Card", mappedBy="set")
      */
     protected $name;
 

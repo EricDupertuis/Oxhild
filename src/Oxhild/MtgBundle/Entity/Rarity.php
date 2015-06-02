@@ -17,6 +17,7 @@ class Rarity
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @ORM\OneToMany(targetEntity="Card", mappedBy="rarity")
      */
     protected $rarity;
 

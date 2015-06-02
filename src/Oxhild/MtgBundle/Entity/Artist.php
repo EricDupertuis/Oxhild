@@ -16,6 +16,7 @@ class Artist
     protected $id;
     /**
      * @ORM\Column(type="string", length=50)
+     * @ORM\OneToMany(targetEntity="card", mappedBy="artist")
      */
     protected $name;
 

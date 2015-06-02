@@ -132,9 +132,9 @@ class ImportCommand extends ContainerAwareCommand
                         $newLayout = new Layout();
                         $newLayout->setName($cardData['layout']);
                         $this->em->persist($newLayout);
-                        $card->addLayout($newLayout);
+                        $card->setLayout($newLayout);
                     } else {
-                        $card->addLayout($searchLayout);
+                        $card->setLayout($searchLayout);
                     }
                     // End Layout
 

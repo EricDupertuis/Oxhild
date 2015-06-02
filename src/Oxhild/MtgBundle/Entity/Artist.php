@@ -14,9 +14,10 @@ class Artist
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * @ORM\Column(type="string", length=50)
-     * @ORM\OneToMany(targetEntity="card", mappedBy="artist")
+     * @ORM\OneToMany(targetEntity="Card", mappedBy="artist")
      */
     protected $name;
 

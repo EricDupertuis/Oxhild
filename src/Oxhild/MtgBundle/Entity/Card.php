@@ -32,7 +32,7 @@ class Card
     protected $cmc;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Color", inversedBy="name")
+     * @ORM\ManyToMany(targetEntity="Color", inversedBy="id")
      * @ORM\JoinTable(name="colors_cards")
      */
     protected $colors;
@@ -77,7 +77,7 @@ class Card
     protected $flavor;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Oxhild\MtgBundle\Entity\Artist", inversedBy="name")
+     * @ORM\ManyToOne(targetEntity="Artist", inversedBy="name")
      * @ORM\JoinColumn(name="artist_id", referencedColumnName="id")
      */
     protected $artist;
@@ -98,7 +98,7 @@ class Card
     protected $toughness;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Layout", inversedBy="name")
+     * @ORM\ManyToOne(targetEntity="Layout", inversedBy="id")
      * @ORM\JoinColumn(name="layout_id", referencedColumnName="id")
      */
     protected $layout;
@@ -112,22 +112,6 @@ class Card
      * @ORM\Column(type="string")
      */
     protected $image_name;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Oxhild\MtgBundle\Entity\Set")
-     * @ORM\JoinColumn(name="set_id", referencedColumnName="id")
-     */
-    protected $set;
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->colors = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->supertypes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->types = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->subtypes = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get array with specific mana entries from cmc
@@ -147,6 +131,16 @@ class Card
             }
         }
         return  $return;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->colors = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->supertypes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->types = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->subtypes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -611,28 +605,5 @@ class Card
     public function getLayout()
     {
         return $this->layout;
-    }
-
-    /**
-     * Set set
-     *
-     * @param \Oxhild\MtgBundle\Entity\Set $set
-     * @return Card
-     */
-    public function setSet(\Oxhild\MtgBundle\Entity\Set $set = null)
-    {
-        $this->set = $set;
-
-        return $this;
-    }
-
-    /**
-     * Get set
-     *
-     * @return \Oxhild\MtgBundle\Entity\Set 
-     */
-    public function getSet()
-    {
-        return $this->set;
     }
 }

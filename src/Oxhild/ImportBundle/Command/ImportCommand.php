@@ -2,14 +2,15 @@
 
 namespace Oxhild\ImportBundle\Command;
 
-use Oxhild\MtgBundle\Entity\Artist;
-use Oxhild\MtgBundle\Entity\Rarity;
-use Oxhild\MtgBundle\Entity\Subtype;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Doctrine\ORM\EntityManager;
+use Oxhild\MtgBundle\Entity\Artist;
+use Oxhild\MtgBundle\Entity\Rarity;
+use Oxhild\MtgBundle\Entity\Subtype;
+use Oxhild\MtgBundle\Entity\Supertype;
 use Oxhild\MtgBundle\Entity\Card;
 use Oxhild\MtgBundle\Entity\Set;
 use Oxhild\MtgBundle\Entity\Settype;
@@ -189,6 +190,23 @@ class ImportCommand extends ContainerAwareCommand
                         }
                     }
                     // End Subtypes
+
+                    // Supertypes
+                    if (isset($cardData['supertypes'])) {
+                        foreach ($cardData['supertypes'] as $supertype) {
+                            $searchSt = $this->em->getRepository('OxhildMtgBundle:Supertype')->findOneBy(['name' => $supertype]);
+
+                            if ($searchSt === null) {
+                                $newSupertype = new Supertype();
+                                $newSupertype->setName($supertype);
+                                $this->em->persist($newSupertype);
+                                $card->addSupertype($newSupertype);
+                            } else {
+                                $card->addSupertype($searchSt);
+                            }
+                        }
+                    }
+                    // End Supertypes
 
                     // Rarity
                     $searchRarity = $this->em->getRepository('OxhildMtgBundle:Rarity')->findOneBy(['rarity' => $cardData['rarity']]);

@@ -74,7 +74,7 @@ class ImportCommand extends ContainerAwareCommand
 
             if ($searchSet === null) {
 
-                $output->writeln('<info> Set not found, adding to database</info>');
+                $output->writeln('<info> Set not found, adding to database '.$content['name'].'</info>');
 
                 $set = new Set();
                 $settype = new Settype();
@@ -84,7 +84,7 @@ class ImportCommand extends ContainerAwareCommand
                 );
 
                 if ($type === null) {
-                    $output->writeln('<info> Set type not found, adding to database</info>');
+                    $output->writeln('<info> Set type not found, adding to database '.$content['type'].'</info>');
 
                     $settype->setName($content['type']);
                     $this->em->persist($settype);

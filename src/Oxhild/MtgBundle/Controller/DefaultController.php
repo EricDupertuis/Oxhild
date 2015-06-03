@@ -33,8 +33,12 @@ class DefaultController extends Controller
     public function searchAction($name)
     {
         $em = $this->getDoctrine()->getManager();
-        $em->getRepository('OxhildMtgBundle:Card')->findBy(['name' => $name]);
+        $cards = $em->getRepository('OxhildMtgBundle:Card')->createQueryBuilder('c')
+            ->where('c.name LIKE :name')
+            ->setParameter('name', '%'.$name.'%')
+            ->getQuery()
+            ->getResult();
 
-        return $this->render('OxhildMtgBundle:Default:base.html.twig', array('form' => 'search success'));
+        return $this->render('OxhildMtgBundle:Default:base.html.twig', array('cards' => $cards));
     }
 }

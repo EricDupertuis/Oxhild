@@ -1,6 +1,7 @@
 <?php
 namespace Oxhild\MtgBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,98 +21,105 @@ class Card
      * @ORM\Column(type="string")
      */
     protected $name;
-
+    /**
+     * @ORM\ManyToOne(targetEntity="Set", inversedBy="cards")
+     */
+    protected $set;
     /**
      * @ORM\Column(type="string")
      */
     protected $mana_cost;
-
     /**
      * @ORM\Column(type="integer")
      */
     protected $cmc;
-
     /**
-     * @ORM\ManyToMany(targetEntity="Color", inversedBy="id")
-     * @ORM\JoinTable(name="colors_cards")
+     * @ORM\ManyToMany(targetEntity="Color", inversedBy="cards")
      */
     protected $colors;
-
     /**
      * @ORM\Column(type="string")
      */
     protected $type;
-
     /**
-     * @ORM\ManyToMany(targetEntity="Supertype", inversedBy="name")
-     * @ORM\JoinTable(name="supertypes_cards")
+     * @ORM\ManyToMany(targetEntity="Supertype", inversedBy="cards")
      */
     protected $supertypes;
-
     /**
-     * @ORM\ManyToMany(targetEntity="Type", inversedBy="name")
-     * @ORM\JoinTable(name="types_cards")
+     * @ORM\ManyToMany(targetEntity="Type", inversedBy="cards")
      */
     protected $types;
-
     /**
-     * @ORM\ManyToMany(targetEntity="Subtype", inversedBy="name")
-     * @ORM\JoinTable(name="subtypes_cards")
+     * @ORM\ManyToMany(targetEntity="Subtype", inversedBy="cards")
      */
     protected $subtypes;
-
     /**
-     * @ORM\ManyToOne(targetEntity="Oxhild\MtgBundle\Entity\Rarity", inversedBy="rarity")
-     * @ORM\JoinColumn(name="rarity_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Rarity", inversedBy="cards")
      */
     protected $rarity;
-
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     protected $text;
-
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     protected $flavor;
-
     /**
-     * @ORM\ManyToOne(targetEntity="Artist", inversedBy="name")
-     * @ORM\JoinColumn(name="artist_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Artist", inversedBy="cards")
      */
     protected $artist;
-
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $number;
-
     /**
      * @ORM\Column(type="string", nullable=true)
      */
     protected $power;
-
     /**
      * @ORM\Column(type="string", nullable=true)
      */
     protected $toughness;
-
     /**
-     * @ORM\ManyToOne(targetEntity="Layout", inversedBy="id")
-     * @ORM\JoinColumn(name="layout_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Layout", inversedBy="cards")
      */
     protected $layout;
-
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $multiverseid;
-
     /**
      * @ORM\Column(type="string")
      */
     protected $image_name;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->colors = new ArrayCollection();
+        $this->supertypes = new ArrayCollection();
+        $this->types = new ArrayCollection();
+        $this->subtypes = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSet()
+    {
+        return $this->set;
+    }
+
+    /**
+     * @param mixed $set
+     */
+    public function setSet($set)
+    {
+        $this->set = $set;
+    }
 
     /**
      * Get array with specific mana entries from cmc
@@ -120,7 +128,7 @@ class Card
      */
     public function getManaArray()
     {
-        $delimiters = array("{","}");
+        $delimiters = array("{", "}");
         $ready = str_replace($delimiters, $delimiters[0], $this->name);
         $launch = explode($delimiters[0], $ready);
 
@@ -130,27 +138,28 @@ class Card
                 $return[] = $value;
             }
         }
-        return  $return;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->colors = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->supertypes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->types = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->subtypes = new \Doctrine\Common\Collections\ArrayCollection();
+
+        return $return;
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -167,13 +176,13 @@ class Card
     }
 
     /**
-     * Get name
+     * Get mana_cost
      *
-     * @return string 
+     * @return string
      */
-    public function getName()
+    public function getManaCost()
     {
-        return $this->name;
+        return $this->mana_cost;
     }
 
     /**
@@ -190,13 +199,13 @@ class Card
     }
 
     /**
-     * Get mana_cost
+     * Get cmc
      *
-     * @return string 
+     * @return integer
      */
-    public function getManaCost()
+    public function getCmc()
     {
-        return $this->mana_cost;
+        return $this->cmc;
     }
 
     /**
@@ -213,13 +222,13 @@ class Card
     }
 
     /**
-     * Get cmc
+     * Get type
      *
-     * @return integer 
+     * @return string
      */
-    public function getCmc()
+    public function getType()
     {
-        return $this->cmc;
+        return $this->type;
     }
 
     /**
@@ -236,13 +245,13 @@ class Card
     }
 
     /**
-     * Get type
+     * Get text
      *
-     * @return string 
+     * @return string
      */
-    public function getType()
+    public function getText()
     {
-        return $this->type;
+        return $this->text;
     }
 
     /**
@@ -259,13 +268,13 @@ class Card
     }
 
     /**
-     * Get text
+     * Get flavor
      *
-     * @return string 
+     * @return string
      */
-    public function getText()
+    public function getFlavor()
     {
-        return $this->text;
+        return $this->flavor;
     }
 
     /**
@@ -282,13 +291,13 @@ class Card
     }
 
     /**
-     * Get flavor
+     * Get number
      *
-     * @return string 
+     * @return integer
      */
-    public function getFlavor()
+    public function getNumber()
     {
-        return $this->flavor;
+        return $this->number;
     }
 
     /**
@@ -305,13 +314,13 @@ class Card
     }
 
     /**
-     * Get number
+     * Get power
      *
-     * @return integer 
+     * @return string
      */
-    public function getNumber()
+    public function getPower()
     {
-        return $this->number;
+        return $this->power;
     }
 
     /**
@@ -328,13 +337,13 @@ class Card
     }
 
     /**
-     * Get power
+     * Get toughness
      *
-     * @return string 
+     * @return string
      */
-    public function getPower()
+    public function getToughness()
     {
-        return $this->power;
+        return $this->toughness;
     }
 
     /**
@@ -351,13 +360,13 @@ class Card
     }
 
     /**
-     * Get toughness
+     * Get multiverseid
      *
-     * @return string 
+     * @return integer
      */
-    public function getToughness()
+    public function getMultiverseid()
     {
-        return $this->toughness;
+        return $this->multiverseid;
     }
 
     /**
@@ -374,13 +383,13 @@ class Card
     }
 
     /**
-     * Get multiverseid
+     * Get image_name
      *
-     * @return integer 
+     * @return string
      */
-    public function getMultiverseid()
+    public function getImageName()
     {
-        return $this->multiverseid;
+        return $this->image_name;
     }
 
     /**
@@ -394,16 +403,6 @@ class Card
         $this->image_name = $imageName;
 
         return $this;
-    }
-
-    /**
-     * Get image_name
-     *
-     * @return string 
-     */
-    public function getImageName()
-    {
-        return $this->image_name;
     }
 
     /**
@@ -432,7 +431,7 @@ class Card
     /**
      * Get colors
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getColors()
     {
@@ -465,7 +464,7 @@ class Card
     /**
      * Get supertypes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSupertypes()
     {
@@ -498,7 +497,7 @@ class Card
     /**
      * Get types
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTypes()
     {
@@ -531,11 +530,21 @@ class Card
     /**
      * Get subtypes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSubtypes()
     {
         return $this->subtypes;
+    }
+
+    /**
+     * Get rarity
+     *
+     * @return \Oxhild\MtgBundle\Entity\Rarity
+     */
+    public function getRarity()
+    {
+        return $this->rarity;
     }
 
     /**
@@ -552,13 +561,13 @@ class Card
     }
 
     /**
-     * Get rarity
+     * Get artist
      *
-     * @return \Oxhild\MtgBundle\Entity\Rarity 
+     * @return \Oxhild\MtgBundle\Entity\Artist
      */
-    public function getRarity()
+    public function getArtist()
     {
-        return $this->rarity;
+        return $this->artist;
     }
 
     /**
@@ -575,13 +584,13 @@ class Card
     }
 
     /**
-     * Get artist
+     * Get layout
      *
-     * @return \Oxhild\MtgBundle\Entity\Artist 
+     * @return \Oxhild\MtgBundle\Entity\Layout
      */
-    public function getArtist()
+    public function getLayout()
     {
-        return $this->artist;
+        return $this->layout;
     }
 
     /**
@@ -595,15 +604,5 @@ class Card
         $this->layout = $layout;
 
         return $this;
-    }
-
-    /**
-     * Get layout
-     *
-     * @return \Oxhild\MtgBundle\Entity\Layout 
-     */
-    public function getLayout()
-    {
-        return $this->layout;
     }
 }

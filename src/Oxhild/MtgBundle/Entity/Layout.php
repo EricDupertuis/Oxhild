@@ -3,6 +3,7 @@ namespace Oxhild\MtgBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="layouts")
@@ -17,19 +18,54 @@ class Layout
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
      * @ORM\OneToMany(targetEntity="Card", mappedBy="layout")
      */
+    protected $cards;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
     protected $name;
+
+    function __construct()
+    {
+        $this->cards = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCards()
+    {
+        return $this->cards;
+    }
+
+    /**
+     * @param mixed $cards
+     */
+    public function setCards($cards)
+    {
+        $this->cards = $cards;
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -43,15 +79,5 @@ class Layout
         $this->name = $name;
 
         return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 }

@@ -17,9 +17,14 @@ class Color
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @ORM\ManyToMany(targetEntity="Card", mappedBy="id")
+
      */
     protected $color;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Card", mappedBy="colors")
+     */
+    protected $cards;
 
     /**
      * Get id

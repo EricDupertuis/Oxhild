@@ -1,7 +1,9 @@
 <?php
 namespace Oxhild\MtgBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="sets")
@@ -16,9 +18,13 @@ class Set
     protected $id;
     /**
      * @ORM\Column(type="string", length=50)
-     * @ORM\OneToMany(targetEntity="Card", mappedBy="set")
      */
     protected $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Card", mappedBy="set")
+     */
+    protected $cards;
 
     /**
      * @ORM\Column(type="string", length=10)
@@ -40,26 +46,54 @@ class Set
      * @ORM\Column(type="date", nullable=false)
      */
     protected $releaseDate;
-
     /**
      * @ORM\Column(type="string", length=50)
      */
     protected $borders;
-
     /**
-     * @ORM\ManyToOne(targetEntity="Oxhild\MtgBundle\Entity\Settype")
-     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Settype", inversedBy="sets")
      */
     protected $type;
+
+    function __construct()
+    {
+        $this->cards = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCards()
+    {
+        return $this->cards;
+    }
+
+    /**
+     * @param mixed $cards
+     */
+    public function setCards($cards)
+    {
+        $this->cards = $cards;
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -76,13 +110,13 @@ class Set
     }
 
     /**
-     * Get name
+     * Get code
      *
-     * @return string 
+     * @return string
      */
-    public function getName()
+    public function getCode()
     {
-        return $this->name;
+        return $this->code;
     }
 
     /**
@@ -99,13 +133,13 @@ class Set
     }
 
     /**
-     * Get code
+     * Get gathererCode
      *
-     * @return string 
+     * @return string
      */
-    public function getCode()
+    public function getGathererCode()
     {
-        return $this->code;
+        return $this->gathererCode;
     }
 
     /**
@@ -122,13 +156,13 @@ class Set
     }
 
     /**
-     * Get gathererCode
+     * Get magicCardsInfoCode
      *
-     * @return string 
+     * @return string
      */
-    public function getGathererCode()
+    public function getMagicCardsInfoCode()
     {
-        return $this->gathererCode;
+        return $this->magicCardsInfoCode;
     }
 
     /**
@@ -145,13 +179,13 @@ class Set
     }
 
     /**
-     * Get magicCardsInfoCode
+     * Get releaseDate
      *
-     * @return string 
+     * @return \DateTime
      */
-    public function getMagicCardsInfoCode()
+    public function getReleaseDate()
     {
-        return $this->magicCardsInfoCode;
+        return $this->releaseDate;
     }
 
     /**
@@ -168,13 +202,13 @@ class Set
     }
 
     /**
-     * Get releaseDate
+     * Get borders
      *
-     * @return \DateTime 
+     * @return string
      */
-    public function getReleaseDate()
+    public function getBorders()
     {
-        return $this->releaseDate;
+        return $this->borders;
     }
 
     /**
@@ -191,13 +225,13 @@ class Set
     }
 
     /**
-     * Get borders
+     * Get type
      *
-     * @return string 
+     * @return \Oxhild\MtgBundle\Entity\Settype
      */
-    public function getBorders()
+    public function getType()
     {
-        return $this->borders;
+        return $this->type;
     }
 
     /**
@@ -211,15 +245,5 @@ class Set
         $this->type = $type;
 
         return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return \Oxhild\MtgBundle\Entity\Settype 
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 }

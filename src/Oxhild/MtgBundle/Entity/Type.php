@@ -16,9 +16,13 @@ class Type
     protected $id;
     /**
      * @ORM\Column(type="string", length=50)
-     * @ORM\ManyToMany(targetEntity="Card", mappedBy="types")
      */
     protected $name;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Card", mappedBy="types")
+     */
+    protected $cards;
 
     /**
      * Get id

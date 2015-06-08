@@ -19,6 +19,8 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new Oxhild\MtgBundle\OxhildMtgBundle(),
             new Oxhild\ImportBundle\OxhildImportBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new Oxhild\UserBundle\OxhildUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

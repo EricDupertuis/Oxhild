@@ -27,3 +27,6 @@ Temporary Items
 # PhpStorm
 .idea
 /remote-medias/
+
+# Bower
+src/Oxhild/MtgBundle/Resources/public/vendor

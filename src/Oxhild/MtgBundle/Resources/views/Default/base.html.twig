@@ -23,6 +23,11 @@
     <body>
         {% block content %}
             <h1>Hello World</h1>
+            {% if app.user %}
+                Logged in as : {{ app.user.username }}
+            {% elseif not app.user %}
+                Not Logged in
+            {% endif %}
         {% endblock %}
 
         {% block javascripts %}

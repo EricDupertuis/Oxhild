@@ -16,17 +16,6 @@
         <!-- Place favicon.ico and apple-touch-icon.png in the web directory -->
     </head>
     <body>
-        {% for card in cards %}
-            <div style="border: 2px solid #000;margin:10px;max-width: 200px;">
-                <ul>
-                    <li>{{ card.name }}</li>
-                    <li>{{ card.cmc }}</li>
-                    <li>{{ card.flavor }}</li>
-                    <li>{{ card.text }}</li>
-                </ul>
-            </div>
-        {% endfor %}
-
         {% block javascripts %}
             {% javascripts '@OxhildMtgBundle/Resources/public/js/*' %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>

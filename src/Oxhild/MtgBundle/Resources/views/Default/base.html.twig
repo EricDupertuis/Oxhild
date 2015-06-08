@@ -10,12 +10,21 @@
             <meta name="viewport" content="user-scalable=yes,width=device-width,initial-scale=1">
 
             {% block stylesheets %}
+                {% stylesheets
+                    "@OxhildMtgBundle/Resources/public/vendor/bootstrap/dist/css/bootstrap.min.css"
+                %}
+                    <link type="text/css" rel="stylesheet" media="all" href="{{ asset_url }}" />
+                {% endstylesheets %}
             {% endblock %}
 
         {% endblock %}
         <!-- Place favicon.ico and apple-touch-icon.png in the web directory -->
     </head>
     <body>
+        {% block content %}
+            <h1>Hello World</h1>
+        {% endblock %}
+
         {% block javascripts %}
             {% javascripts '@OxhildMtgBundle/Resources/public/js/*' %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>

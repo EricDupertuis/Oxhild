@@ -21,17 +21,22 @@
         <!-- Place favicon.ico and apple-touch-icon.png in the web directory -->
     </head>
     <body>
-        {% block content %}
-            <h1>Hello World</h1>
-            {% if app.user %}
-                Logged in as : {{ app.user.username }}
-            {% elseif not app.user %}
-                Not Logged in
-            {% endif %}
-        {% endblock %}
+        <div class="container">
+            {% block content %}
+                <h1>Hello World</h1>
+                {% if app.user %}
+                    Logged in as : {{ app.user.username }}
+                {% elseif not app.user %}
+                    Not Logged in
+                {% endif %}
+            {% endblock %}
+        </div>
 
         {% block javascripts %}
-            {% javascripts '@OxhildMtgBundle/Resources/public/js/*' %}
+            {% javascripts "@OxhildMtgBundle/Resources/public/js/*"
+                            "@OxhildMtgBundle/Resources/public/vendor/jquery/dist/jquery.min.js"
+
+            %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}
         {% endblock %}

@@ -1,3 +1,0 @@
-oxhild_import_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: OxhildImportBundle:Default:index }

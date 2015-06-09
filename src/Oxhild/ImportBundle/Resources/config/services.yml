@@ -1,4 +1,0 @@
-services:
-#    oxhild_import.example:
-#        class: Oxhild\ImportBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]

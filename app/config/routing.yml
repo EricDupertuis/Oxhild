@@ -2,10 +2,6 @@ oxhild_user:
     resource: "@OxhildUserBundle/Resources/config/routing.yml"
     prefix:   /
 
-oxhild_import:
-    resource: "@OxhildImportBundle/Resources/config/routing.yml"
-    prefix:   /
-
 oxhild_mtg:
     resource: "@OxhildMtgBundle/Resources/config/routing.yml"
     prefix:   /

@@ -18,7 +18,6 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
             new Oxhild\MtgBundle\OxhildMtgBundle(),
-            new Oxhild\ImportBundle\OxhildImportBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Oxhild\UserBundle\OxhildUserBundle(),
         );

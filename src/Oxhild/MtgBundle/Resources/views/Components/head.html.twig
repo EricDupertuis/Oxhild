@@ -1,0 +1,17 @@
+{% block head %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}Title here{% endblock %}</title>
+
+    <meta name="description" content="Your Description">
+    <meta name="viewport" content="user-scalable=yes,width=device-width,initial-scale=1">
+
+    {% block stylesheets %}
+        {% stylesheets
+        "@OxhildMtgBundle/Resources/public/vendor/bootstrap/dist/css/bootstrap.min.css"
+        %}
+        <link type="text/css" rel="stylesheet" media="all" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
+
+{% endblock %}

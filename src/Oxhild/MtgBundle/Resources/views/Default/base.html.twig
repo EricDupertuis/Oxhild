@@ -1,50 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {% block head %}
-            <meta charset="UTF-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <title>{% block title %}Title here{% endblock %}</title>
-
-            <meta name="description" content="Your Description">
-            <meta name="viewport" content="user-scalable=yes,width=device-width,initial-scale=1">
-
-            {% block stylesheets %}
-                {% stylesheets
-                    "@OxhildMtgBundle/Resources/public/vendor/bootstrap/dist/css/bootstrap.min.css"
-                %}
-                    <link type="text/css" rel="stylesheet" media="all" href="{{ asset_url }}" />
-                {% endstylesheets %}
-            {% endblock %}
-
-        {% endblock %}
-        <!-- Place favicon.ico and apple-touch-icon.png in the web directory -->
+        {% include 'OxhildMtgBundle:Components:head.html.twig' %}
     </head>
     <body>
-        {% block nav %}
-            <nav class="navbar navbar-inverse navbar-top">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#">Project name</a>
-                    </div>
-                    <div id="navbar" class="navbar-collapse collapse">
-                        <form class="navbar-form navbar-right">
-                            {% if app.user %}
-                                <a href="{{ path('fos_user_security_logout') }}"><button class="btn btn-danger">Logout</button></a>
-                            {% elseif not app.user %}
-                                <a href="{{ path('fos_user_security_login') }}"><button class="btn btn-success">Sign in</button></a>
-                            {% endif %}
-                        </form>
-                    </div><!--/.navbar-collapse -->
-                </div>
-            </nav>
-        {% endblock %}
+        {% include 'OxhildMtgBundle:Components:nav.html.twig' %}
         <div class="container">
             {% block content %}
                 <h1>Hello World</h1>

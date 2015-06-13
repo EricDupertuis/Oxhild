@@ -1,4 +1,4 @@
-oxhild_mtg_homepage:
+oxhild_homepage:
     path:     /
     defaults: { _controller: OxhildMtgBundle:Default:index }
 

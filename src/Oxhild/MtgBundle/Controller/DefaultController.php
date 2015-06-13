@@ -24,7 +24,7 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            return $this->redirect($this->generateUrl('search_card'));
+            return $this->redirect($this->generateUrl('oxhild_search_card'));
         }
 
         $user = $this->getUser();

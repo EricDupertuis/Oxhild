@@ -27,6 +27,8 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('search_card'));
         }
 
+        $user = $this->getUser();
+        dump($user);
         return $this->render('OxhildMtgBundle:Default:base.html.twig', array('form' => $form->createView(),));
     }
 

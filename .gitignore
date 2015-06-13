@@ -34,3 +34,6 @@ src/Oxhild/MtgBundle/Resources/public/vendor
 #assetic
 web/css
 web/js
+
+#sass-cache
+src/Oxhild/MtgBundle/Resources/public/.sass-cache

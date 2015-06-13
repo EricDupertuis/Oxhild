@@ -2,6 +2,6 @@ oxhild_mtg_homepage:
     path:     /
     defaults: { _controller: OxhildMtgBundle:Default:index }
 
-search_card:
+oxhild_search_card:
     path:     /search/{name}
     defaults: { _controller: OxhildMtgBundle:Default:search }

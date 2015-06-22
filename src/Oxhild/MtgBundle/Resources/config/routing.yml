@@ -5,3 +5,7 @@ oxhild_homepage:
 oxhild_search_card:
     path:     /search/{name}
     defaults: { _controller: OxhildMtgBundle:Default:search }
+
+oxhild_binder_new:
+    path:   /binder/new
+    defaults: { _controller: OxhildMtgBundle:Binder:new }

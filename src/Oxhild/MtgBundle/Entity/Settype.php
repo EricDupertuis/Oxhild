@@ -1,4 +1,5 @@
 <?php
+
 namespace Oxhild\MtgBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -28,7 +29,7 @@ class Settype
      */
     protected $sets;
 
-    function __construct()
+    public function __construct()
     {
         $this->sets = new ArrayCollection();
     }

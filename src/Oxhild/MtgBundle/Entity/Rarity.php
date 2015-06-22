@@ -27,7 +27,7 @@ class Rarity
      */
     protected $cards;
 
-    function __construct()
+    public function __construct()
     {
         $this->cards = new ArrayCollection();
     }

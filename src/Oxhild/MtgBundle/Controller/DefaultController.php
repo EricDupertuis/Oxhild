@@ -11,25 +11,11 @@ use Oxhild\MtgBundle\Entity\Layout;
 use Oxhild\MtgBundle\Entity\Subtype;
 use Oxhild\MtgBundle\Entity\Color;
 
-
 class DefaultController extends Controller
 {
-    public function indexAction(Request $request)
+    public function indexAction()
     {
-        $card = new Card();
-        $form = $this->createFormBuilder($card)
-            ->add('name', 'text')
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            return $this->redirect($this->generateUrl('oxhild_search_card'));
-        }
-
-        $user = $this->getUser();
-        dump($user);
-        return $this->render('OxhildMtgBundle:Default:base.html.twig', array('form' => $form->createView(),));
+        return $this->render('OxhildMtgBundle:Default:base.html.twig');
     }
 
     public function searchAction($name)

@@ -47,7 +47,7 @@ class ImportCommand extends ContainerAwareCommand
 
             if ($download === false) {
                 $output->writeln('<error>Oups, file not find. Check your internet connection</error>');
-                die;
+                return false;
             } else {
                 $output->writeln('<info>Download successful</info>');
                 $data = json_decode($download, true);
@@ -58,7 +58,7 @@ class ImportCommand extends ContainerAwareCommand
 
             if ($download === false) {
                 $output->writeln('<error>Oups, Something went wrong. Debug mode is active</error>');
-                die;
+                return false;
             } else {
                 $output->writeln('<info>Download successful</info>');
                 $data = $download;

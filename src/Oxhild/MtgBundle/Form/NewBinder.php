@@ -19,6 +19,8 @@ class NewBinder extends AbstractType
     {
         $builder->add('name')
             ->add('description')
+            ->add('save', 'submit')
+            ->getForm();
         ;
     }
 

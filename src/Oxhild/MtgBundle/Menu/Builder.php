@@ -11,14 +11,21 @@ class Builder extends ContainerAware
     {
         $menu = $factory->createItem(
             'root',
-            array(
-                'childrenAttributes' => array(
+            [
+                'childrenAttributes' => [
                     'class' => 'nav navbar-nav navbar-right'
-                )
-            )
+                ]
+            ]
         );
 
-        $menu->addChild('Home', array('route' => 'oxhild_homepage'));
+        $menu->addChild('Home', ['route' => 'oxhild_homepage']);
+        $menu->addChild('Explore', ['route' => 'oxhild_homepage']);
+
+
+        $securityContext = $this->container->get('security.context');
+        if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+
+        }
 
         return $menu;
     }

@@ -21,9 +21,25 @@ class Builder extends ContainerAware
         $menu->addChild('Home', ['route' => 'oxhild_homepage']);
         $menu->addChild('Explore', ['route' => 'oxhild_homepage']);
 
+        return $menu;
+    }
+
+    public function loginMenu(FactoryInterface $factory, array $options)
+    {
+        $menu = $factory->createItem(
+            'root',
+            [
+                'childrenAttributes' => [
+                    'class' => 'nav navbar-nav navbar-right'
+                ]
+            ]
+        );
 
         $securityContext = $this->container->get('security.context');
         if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $usr= $this->container->get('security.context')->getToken()->getUser();
+            $usr->getUsername();
+        } else {
 
         }
 

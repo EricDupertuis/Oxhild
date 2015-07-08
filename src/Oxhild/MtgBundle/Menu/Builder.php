@@ -21,27 +21,30 @@ class Builder extends ContainerAware
         $menu->addChild('Home', ['route' => 'oxhild_homepage']);
         $menu->addChild('Explore', ['route' => 'oxhild_homepage']);
 
-        return $menu;
-    }
-
-    public function loginMenu(FactoryInterface $factory, array $options)
-    {
-        $menu = $factory->createItem(
-            'root',
-            [
-                'childrenAttributes' => [
-                    'class' => 'nav navbar-nav navbar-right'
-                ]
-            ]
-        );
-
         $securityContext = $this->container->get('security.context');
+
         if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             $usr = $securityContext->getToken()->getUser();
-            $test = $usr->getUsername();
-            $menu->addChild($test, ['route' => 'oxhild_homepage']);
-        } else {
+            $username = $usr->getUsername();
 
+            $menu->addChild($username, [
+                'route' => 'oxhild_homepage',
+                'attributes' => [
+                    'class' => 'dropdown'
+                ]
+            ]);
+
+            $menu[$username]->setChildrenAttribute('class', 'dropdown-menu')
+                            ->setAttribute('class', 'dropdown')
+                            ->setLinkAttributes([
+                                'class' => 'dropdown-toggle',
+                                'data-toggle' => 'dropdown',
+                                'role' => 'button',
+                                'aria-haspopup' => 'true',
+                                'aria-expanded' => 'false'
+                            ])
+                            ->addChild('profile', ['route' => 'oxhild_homepage'])
+            ;
         }
 
         return $menu;

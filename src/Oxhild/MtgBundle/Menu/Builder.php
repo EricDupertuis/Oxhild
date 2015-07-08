@@ -37,8 +37,9 @@ class Builder extends ContainerAware
 
         $securityContext = $this->container->get('security.context');
         if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            $usr= $this->container->get('security.context')->getToken()->getUser();
-            $usr->getUsername();
+            $usr = $securityContext->getToken()->getUser();
+            $test = $usr->getUsername();
+            $menu->addChild($test, ['route' => 'oxhild_homepage']);
         } else {
 
         }

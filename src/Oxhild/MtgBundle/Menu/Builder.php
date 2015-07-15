@@ -45,6 +45,8 @@ class Builder extends ContainerAware
                             ])
                             ->addChild('profile', ['route' => 'oxhild_homepage'])
             ;
+        } else {
+            $menu->addChild('login', ['route' => 'fos_user_security_login']);
         }
 
         return $menu;

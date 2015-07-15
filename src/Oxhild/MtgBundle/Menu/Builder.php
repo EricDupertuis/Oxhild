@@ -43,10 +43,22 @@ class Builder extends ContainerAware
                                 'aria-haspopup' => 'true',
                                 'aria-expanded' => 'false'
                             ])
-                            ->addChild('profile', ['route' => 'oxhild_homepage'])
-            ;
+                            ->addChild('profile', [
+                                'route' => 'oxhild_homepage',
+                                'attributes' => [
+                                    'class' => 'text-danger'
+                                ]
+                            ]);
+
+            $menu[$username]->addChild('')->setAttributes([
+                'role' => 'separator',
+                'class' => 'divider'
+            ]);
+
+            $menu[$username]->addChild('logout', ['route' => 'fos_user_security_logout']);
         } else {
             $menu->addChild('login', ['route' => 'fos_user_security_login']);
+            $menu['login']->setAttribute('class', 'text-danger');
         }
 
         return $menu;

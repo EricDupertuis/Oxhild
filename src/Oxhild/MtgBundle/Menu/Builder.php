@@ -25,7 +25,7 @@ class Builder extends ContainerAware
 
         if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             $usr = $securityContext->getToken()->getUser();
-            $username = $usr->getUsername();
+            $username = ucfirst($usr->getUsername());
 
             $menu->addChild($username, [
                 'route' => 'oxhild_homepage',
@@ -42,20 +42,28 @@ class Builder extends ContainerAware
                                 'role' => 'button',
                                 'aria-haspopup' => 'true',
                                 'aria-expanded' => 'false'
-                            ])
-                            ->addChild('profile', [
-                                'route' => 'oxhild_homepage',
-                                'attributes' => [
-                                    'class' => 'text-danger'
-                                ]
                             ]);
 
-            $menu[$username]->addChild('')->setAttributes([
-                'role' => 'separator',
-                'class' => 'divider'
+            $menu[$username]->addChild('My Binders', [
+                'route' => 'oxhild_homepage'
             ]);
 
-            $menu[$username]->addChild('logout', ['route' => 'fos_user_security_logout']);
+            $menu[$username]->addChild('Profile', [
+                'route' => 'fos_user_profile_show',
+                'attributes' => [
+                    'class' => 'text-danger'
+                ]
+            ]);
+
+            $menu[$username]->addChild('separator', [
+                'attributes' => [
+                    'class' =>  'divider'
+                ]
+            ]);
+
+            $menu[$username]->addChild('Logout', [
+                'route' => 'fos_user_security_logout',
+            ]);
         } else {
             $menu->addChild('login', ['route' => 'fos_user_security_login']);
             $menu['login']->setAttribute('class', 'text-danger');

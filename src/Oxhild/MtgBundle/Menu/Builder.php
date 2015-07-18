@@ -61,6 +61,19 @@ class Builder extends ContainerAware
                 ]
             ]);
 
+            $menu[$username]->addChild('New Binder', [
+                'route' => 'oxhild_binder_new',
+                'attributes' => [
+                    'class' => 'text-danger'
+                ]
+            ]);
+
+            $menu[$username]->addChild('separator', [
+                'attributes' => [
+                    'class' =>  'divider'
+                ]
+            ]);
+
             $menu[$username]->addChild('Logout', [
                 'route' => 'fos_user_security_logout',
             ]);

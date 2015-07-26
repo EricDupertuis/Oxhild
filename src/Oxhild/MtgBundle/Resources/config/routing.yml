@@ -2,14 +2,14 @@ oxhild_homepage:
     path:     /
     defaults: { _controller: OxhildMtgBundle:Default:index }
 
-oxhild_show_card:
-    path:     /card/{id}
-    defaults: { _controller: OxhildMtgBundle:Card:show }
+oxhild_binder_new:
+    path:   /binder/new
+    defaults: { _controller: OxhildMtgBundle:Binder:new }
 
 oxhild_search_card:
     path:     /search/{name}
     defaults: { _controller: OxhildMtgBundle:Default:search }
 
-oxhild_binder_new:
-    path:   /binder/new
-    defaults: { _controller: OxhildMtgBundle:Binder:new }
+oxhild_show_card:
+    path:     /card/{id}
+    defaults: { _controller: OxhildMtgBundle:Card:show }

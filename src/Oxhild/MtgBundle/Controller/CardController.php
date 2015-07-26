@@ -12,13 +12,13 @@ class CardController extends Controller
             ->getRepository('OxhildMtgBundle:Card')
             ->findOneBy($id);
 
+        dump($card);
+
         if (!$card) {
             throw $this->createNotFoundException(
                 'No cards found with the id : '.$id
             );
         }
-
-        dump($card);
 
         return $this->render('OxhildMtgBundle:Card:show.html.twig', array( 'card' => $card ));
     }

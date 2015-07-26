@@ -27,6 +27,8 @@ class DefaultController extends Controller
             ->getQuery()
             ->getResult();
 
+        dump($cards);
+
         return $this->render('OxhildMtgBundle:Default:base.html.twig', array('cards' => $cards));
     }
 }

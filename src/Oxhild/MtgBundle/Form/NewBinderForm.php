@@ -27,9 +27,11 @@ class NewBinderForm extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Oxhild\MtgBundle\Entity\Binder'
-        ));
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Oxhild\MtgBundle\Entity\Binder'
+            )
+        );
     }
 
     public function getName()

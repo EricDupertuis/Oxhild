@@ -18,16 +18,19 @@ class BinderController extends Controller
 
         if ($form->isValid()) {
             $data = $form->getData();
+            dump($data);
             $em = $this->getDoctrine()->getManager();
 
             $binder = new Binder();
             $binder->setName($data['name'])
                 ->setDescription($data['description']);
 
-            if ($data['private'] == 1) {
+            if ($data['private'] == true) {
                 $binder->setPrivate(1);
+            } elseif ($data['private'] == false) {
+                $binder->setPrivate(0);
             } else {
-                $binder->setPrivate(2);
+                return false;
             }
 
             $binder->setAddedDate(new \DateTime("now"))
@@ -37,8 +40,6 @@ class BinderController extends Controller
             $binder->setUser($user);
             $em->persist($binder);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('oxhild_homepage'));
         }
 
         return $this->render('OxhildMtgBundle:Binder:new.html.twig', array(

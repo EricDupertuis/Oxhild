@@ -19,7 +19,9 @@ class NewBinderForm extends AbstractType
     {
         $builder->add('name', 'text')
             ->add('description', 'text')
-            ->add('private', 'checkbox')
+            ->add('private', 'checkbox', array(
+                'required' => false
+            ))
             ->add('save', 'submit')
             ->getForm();
         ;

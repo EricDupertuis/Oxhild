@@ -14,7 +14,10 @@ class BinderController extends Controller
         $form = $this->container->get('form.factory')->create(new NewBinderForm());
 
         if ($form->isValid()) {
-            $binder = new Binder();
+            $binder = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($binder);
+            $em->flush();
         }
 
         return $this->render('OxhildMtgBundle:Binder:new.html.twig', array(

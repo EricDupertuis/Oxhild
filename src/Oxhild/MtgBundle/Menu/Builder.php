@@ -45,7 +45,7 @@ class Builder extends ContainerAware
                             ]);
 
             $menu[$username]->addChild('My Binders', [
-                'route' => 'oxhild_homepage'
+                'route' => 'oxhild_binder_list'
             ]);
 
             $menu[$username]->addChild('Profile', [

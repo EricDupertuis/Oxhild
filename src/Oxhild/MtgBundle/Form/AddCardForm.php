@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CardSearchForm extends AbstractType
+class AddCardForm extends AbstractType
 {
     /**
      * Builds the SearchCard form
@@ -16,18 +16,20 @@ class CardSearchForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name');
+        $builder->add('name', 'choice')
+            ->add('save', 'submit')
+            ->getForm();
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Oxhild\MtgBundle\Entity\Card'
+            'data_class' => 'Oxhild\MtgBundle\Entity\Binder'
         ));
     }
 
     public function getName()
     {
-        return 'oxhild_search_card';
+        return 'oxhild_add_card';
     }
 }

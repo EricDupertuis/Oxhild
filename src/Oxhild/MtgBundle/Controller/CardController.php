@@ -3,6 +3,7 @@
 namespace Oxhild\MtgBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Oxhild\MtgBundle\Entity\Set;
 
 class CardController extends Controller
 {
@@ -10,9 +11,7 @@ class CardController extends Controller
     {
         $card = $this->getDoctrine()
             ->getRepository('OxhildMtgBundle:Card')
-            ->findOneBy($id);
-
-        dump($card);
+            ->findOneBy(['id' => $id]);
 
         if (!$card) {
             throw $this->createNotFoundException(
@@ -20,6 +19,14 @@ class CardController extends Controller
             );
         }
 
-        return $this->render('OxhildMtgBundle:Card:show.html.twig', array( 'card' => $card ));
+        dump($card->getManaArray());
+
+        return $this->render('OxhildMtgBundle:Card:show.html.twig', [
+            'card' => $card,
+            'rarity' => $card->getRarity(),
+            'artist' => $card->getArtist(),
+            'layout' => $card->getLayout(),
+            'set' => $card->getSet()
+        ]);
     }
 }

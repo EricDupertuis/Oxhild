@@ -1,4 +1,14 @@
 {% extends "OxhildMtgBundle:Default:base.html.twig" %}
 {% block content %}
-show card {{ card.id }}
+    <p>show card {{ card.id }}</p>
+    <p>{{ card.name }}</p>
+    <p>{{ card.manaCost }}</p>
+    <!--<ul>
+        {% for mana in card.manaArray %}
+            <li>{{ mana }}</li>
+        {% endfor %}
+    </ul>-->
+    <p>{{ card.power }} / {{ card.toughness }}</p>
+    <p>{{ set.name }}</p>
+    <p>{{ artist.name }}</p>
 {% endblock  %}

@@ -2,6 +2,10 @@ oxhild_homepage:
     path:     /
     defaults: { _controller: OxhildMtgBundle:Default:index }
 
+oxhild_binder_list:
+    path:   /binder/list
+    defaults: { _controller: OxhildMtgBundle:Binder:list }
+
 oxhild_binder_new:
     path:   /binder/new
     defaults: { _controller: OxhildMtgBundle:Binder:new }

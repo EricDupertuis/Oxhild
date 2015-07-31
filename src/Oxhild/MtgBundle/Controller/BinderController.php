@@ -10,6 +10,22 @@ use Symfony\Component\HttpFoundation\Request;
 class BinderController extends Controller
 {
 
+    public function listAction()
+    {
+        $user = $this->getUser();
+        $binders = $this->getDoctrine()
+            ->getRepository('OxhildMtgBundle:Binder')
+            ->findBy([
+                'user' => $user->getId()]
+            );
+
+        dump($binders);
+
+        return $this->render('OxhildMtgBundle:Binder:list.html.twig', array(
+            'binders' => $binders
+        ));
+    }
+
     public function newAction(Request $request)
     {
         $form = $this->container->get('form.factory')->create(new NewBinderForm());

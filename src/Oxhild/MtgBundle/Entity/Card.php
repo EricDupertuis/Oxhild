@@ -129,7 +129,7 @@ class Card
     public function getManaArray()
     {
         $delimiters = array("{", "}");
-        $ready = str_replace($delimiters, $delimiters[0], $this->name);
+        $ready = str_replace($delimiters, $delimiters[0], $this->mana_cost);
         $launch = explode($delimiters[0], $ready);
 
         $return = array();

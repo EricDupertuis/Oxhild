@@ -3,6 +3,11 @@
     {% for binder in binders %}
         <p>{{ binder.name }}</p>
         <p>{{ binder.description }}</p>
+        {% if binder.private == false %}
+            <p>Public</p>
+        {% else %}
+            <p>Privé</p>
+        {% endif %}
         <p>{{ binder.private }}</p>
     {% endfor %}
 {% endblock  %}

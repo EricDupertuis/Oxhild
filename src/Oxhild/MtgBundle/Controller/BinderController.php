@@ -28,7 +28,7 @@ class BinderController extends Controller
 
     public function newAction(Request $request)
     {
-        $form = $this->container->get('form.factory')->create(new NewBinderForm());
+        $form = $this->createForm(new NewBinderForm());
 
         $form->handleRequest($request);
 

@@ -4,6 +4,8 @@ namespace Oxhild\MtgBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Oxhild\MtgBundle\Entity\Set;
+use Oxhild\MtgBundle\Entity\Binder;
+use Oxhild\MtgBundle\Form\AddCardForm;
 
 class CardController extends Controller
 {
@@ -19,14 +21,22 @@ class CardController extends Controller
             );
         }
 
-        dump($card->getManaArray());
+        $userId = $this->getUser()->getId();
+
+        dump($userId);
+
+        $form = $this->createForm(new AddCardForm(), new binder(), ['attr' => [
+                'user' => $userId
+            ]
+        ]);
 
         return $this->render('OxhildMtgBundle:Card:show.html.twig', [
             'card' => $card,
             'rarity' => $card->getRarity(),
             'artist' => $card->getArtist(),
             'layout' => $card->getLayout(),
-            'set' => $card->getSet()
+            'set' => $card->getSet(),
+            'form' => $form->createView()
         ]);
     }
 }

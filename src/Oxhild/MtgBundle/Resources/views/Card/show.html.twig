@@ -11,4 +11,7 @@
     <p>{{ card.power }} / {{ card.toughness }}</p>
     <p>{{ set.name }}</p>
     <p>{{ artist.name }}</p>
+    <p>{{ card.multiverseid }}</p>
+    <a href="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid={{ card.multiverseid }}&type=card"></a>
+    {{ form(form) }}
 {% endblock  %}

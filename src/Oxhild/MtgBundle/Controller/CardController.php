@@ -3,13 +3,13 @@
 namespace Oxhild\MtgBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Oxhild\MtgBundle\Entity\Set;
 use Oxhild\MtgBundle\Entity\Binder;
 use Oxhild\MtgBundle\Form\AddCardForm;
+use Symfony\Component\HttpFoundation\Request;
 
 class CardController extends Controller
 {
-    public function showAction($id)
+    public function showAction(Request $request, $id)
     {
         $card = $this->getDoctrine()
             ->getRepository('OxhildMtgBundle:Card')
@@ -23,12 +23,21 @@ class CardController extends Controller
 
         $userId = $this->getUser()->getId();
 
-        dump($userId);
-
         $form = $this->createForm(new AddCardForm(), new binder(), ['attr' => [
                 'user' => $userId
             ]
         ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $data = $form->getData();
+            dump($data);
+
+            $binder = $this->getDoctrine()
+                ->getRepository('OxhildMtgBundle:Binder')
+                ->findOneBy(['name' => $data->getName()]);
+        }
 
         return $this->render('OxhildMtgBundle:Card:show.html.twig', [
             'card' => $card,

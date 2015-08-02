@@ -36,7 +36,13 @@ class CardController extends Controller
 
             $binder = $this->getDoctrine()
                 ->getRepository('OxhildMtgBundle:Binder')
-                ->findOneBy(['name' => $data->getName()]);
+                ->findOneBy(['name' => $data->getName()->getName()]);
+
+            $binder->addCard($card);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($binder);
+            $em->flush();
+
         }
 
         return $this->render('OxhildMtgBundle:Card:show.html.twig', [

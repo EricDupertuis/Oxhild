@@ -32,10 +32,10 @@ class AddCardForm extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Oxhild\MtgBundle\Entity\Binder',
             'user' => null
-        ));
+        ]);
     }
 
     public function getName()

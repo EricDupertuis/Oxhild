@@ -17,7 +17,7 @@
                     {% endblock %}
                 </div>
                 <div class="col-lg-3">
-                    lorem ipsum dolor sit amet
+                    {{ render(controller('OxhildMtgBundle:Default:sidebar')) }}
                 </div>
             </div>
         </div>
@@ -26,6 +26,7 @@
             "@OxhildMtgBundle/Resources/public/js/*"
             "@OxhildMtgBundle/Resources/public/vendor/jquery/dist/jquery.min.js"
             "@OxhildMtgBundle/Resources/public/vendor/bootstrap/dist/js/bootstrap.min.js"
+            "@OxhildMtgBundle/Resources/public/js/ajax.js"
             %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}

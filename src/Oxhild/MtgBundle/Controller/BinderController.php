@@ -34,7 +34,6 @@ class BinderController extends Controller
 
         if ($form->isValid()) {
             $data = $form->getData();
-            dump($data);
             $em = $this->getDoctrine()->getManager();
 
             $binder = new Binder();

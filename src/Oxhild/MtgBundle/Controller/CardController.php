@@ -3,12 +3,17 @@
 namespace Oxhild\MtgBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use \Doctrine\ORM\EntityManager;
+use \Doctrine\ORM\Query;
 use Oxhild\MtgBundle\Entity\Binder;
 use Oxhild\MtgBundle\Form\AddCardForm;
 use Symfony\Component\HttpFoundation\Request;
 
 class CardController extends Controller
 {
+    /** @var  EntityManager $em */
+    protected $em;
+
     public function showAction(Request $request, $id)
     {
         $card = $this->getDoctrine()
@@ -53,5 +58,21 @@ class CardController extends Controller
             'set' => $card->getSet(),
             'form' => $form->createView()
         ]);
+    }
+
+    public function searchAction($cardName)
+    {
+        $query = new Query($this->em);
+
+        $cards = $query->getEntityManager()
+            ->getRepository('OxhildMtgBundle:Card')
+            ->createQueryBuilder('c')
+            ->where('m.name LIKE :cardName')
+            ->setParameter('cardName', $cardName)
+            ->getQuery();
+
+        $result = $cards->getResult();
+
+        return $result;
     }
 }

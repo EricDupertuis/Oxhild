@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Doctrine\ORM\EntityManager;
 
-class ImportCommand extends ContainerAwareCommand
+class CardCommand extends ContainerAwareCommand
 {
 
     /** @var  EntityManager $em */

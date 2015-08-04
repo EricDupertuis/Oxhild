@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CardSearchForm extends AbstractType
+class SearchCardForm extends AbstractType
 {
     /**
      * Builds the SearchCard form
@@ -16,7 +16,7 @@ class CardSearchForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name');
+        $builder->add('name', 'text');
     }
 
     public function configureOptions(OptionsResolver $resolver)

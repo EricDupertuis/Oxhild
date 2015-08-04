@@ -16,7 +16,7 @@ class SearchCardForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('keyword', 'text', array('label' => 'Card'));
+        $builder->add('name', 'text', array('label' => 'Card'));
     }
 
     public function configureOptions(OptionsResolver $resolver)

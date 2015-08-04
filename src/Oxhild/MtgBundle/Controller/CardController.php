@@ -5,6 +5,7 @@ namespace Oxhild\MtgBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use \Doctrine\ORM\EntityManager;
 use \Doctrine\ORM\Query;
+use Oxhild\MtgBundle\Form\SearchCardForm;
 use Oxhild\MtgBundle\Entity\Binder;
 use Oxhild\MtgBundle\Form\AddCardForm;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,19 +61,31 @@ class CardController extends Controller
         ]);
     }
 
-    public function searchAction($cardName)
+    public function searchAction(Request $request)
     {
-        $query = new Query($this->em);
+        $form = $this->createForm(new SearchCardForm());
 
-        $cards = $query->getEntityManager()
-            ->getRepository('OxhildMtgBundle:Card')
-            ->createQueryBuilder('c')
-            ->where('m.name LIKE :cardName')
-            ->setParameter('cardName', $cardName)
-            ->getQuery();
+        $form->handleRequest($request);
 
-        $result = $cards->getResult();
+        if ($form->isSubmitted()){
+            dump(true);
+        }
 
-        return $result;
+        if ($form->isValid()) {
+            $query = new Query($this->em);
+
+            $cards = $query->getEntityManager()
+                ->getRepository('OxhildMtgBundle:Card')
+                ->createQueryBuilder('c')
+                ->where('m.name LIKE :cardName')
+                ->setParameter('cardName', $form->getData())
+                ->getQuery();
+
+            $result = $cards->getResult();
+
+            dump($result);
+        }
+
+        return $this->render('OxhildMtgBundle:Components:usersidebar.html.twig', array('form' => $form->createView()));
     }
 }

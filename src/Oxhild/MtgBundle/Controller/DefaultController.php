@@ -13,14 +13,4 @@ class DefaultController extends Controller
     {
         return $this->render('OxhildMtgBundle:Default:base.html.twig');
     }
-
-    public function sidebarAction(){
-        $form = $this->container->get('form.factory')->create(new SearchCardForm());
-
-        if ($form->isValid()) {
-
-        }
-
-        return $this->render('OxhildMtgBundle:Components:usersidebar.html.twig', array('form' => $form->createView()));
-    }
 }

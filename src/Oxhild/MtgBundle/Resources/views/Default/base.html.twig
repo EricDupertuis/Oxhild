@@ -6,13 +6,20 @@
     <body>
         {% include 'OxhildMtgBundle:Components:nav.html.twig' %}
         <div class="container">
-            {% block content %}
-                {% if app.user %}
-                    Logged in as : {{ app.user.username }}
-                {% elseif not app.user %}
-                    Not Logged in
-                {% endif %}
-            {% endblock %}
+            <div class="row">
+                <div class="col-lg-8">
+                    {% block content %}
+                        {% if app.user %}
+                            Logged in as : {{ app.user.username }}
+                        {% elseif not app.user %}
+                            Not Logged in
+                        {% endif %}
+                    {% endblock %}
+                </div>
+                <div class="col-lg-3">
+                    lorem ipsum dolor sit amet
+                </div>
+            </div>
         </div>
         {% block javascripts %}
             {% javascripts

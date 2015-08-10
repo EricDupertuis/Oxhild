@@ -7,7 +7,7 @@
         {% include 'OxhildMtgBundle:Components:nav.html.twig' %}
         <div class="container">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     {% block content %}
                         {% if app.user %}
                             Logged in as : {{ app.user.username }}
@@ -15,9 +15,6 @@
                             Not Logged in
                         {% endif %}
                     {% endblock %}
-                </div>
-                <div class="col-lg-3">
-                    {{ render(controller('OxhildMtgBundle:Card:search')) }}
                 </div>
             </div>
         </div>

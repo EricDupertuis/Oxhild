@@ -24,7 +24,6 @@ class NewBinderForm extends AbstractType
             ))
             ->add('save', 'submit')
             ->getForm();
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -16,14 +16,17 @@ class SearchCardForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', array('label' => 'Card'));
+        $builder->add('name', 'text', array('label' => 'Card'))
+            ->getForm();
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Oxhild\MtgBundle\Entity\Card'
-        ));
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Oxhild\MtgBundle\Entity\Card'
+            )
+        );
     }
 
     public function getName()

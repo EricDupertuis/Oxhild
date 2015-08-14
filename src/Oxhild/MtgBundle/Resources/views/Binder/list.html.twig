@@ -1,13 +1,14 @@
 {% extends "OxhildMtgBundle:Default:base.html.twig" %}
 {% block content %}
     {% for binder in binders %}
-        <p>{{ binder.name }}</p>
-        <p>{{ binder.description }}</p>
-        {% if binder.private == false %}
-            <p>Public</p>
-        {% else %}
-            <p>Privé</p>
-        {% endif %}
-        <p>{{ binder.private }}</p>
+        <div class="col-lg-4">
+            <p>{{ binder.name }}</p>
+            <p>{{ binder.description }}</p>
+            {% if binder.private == false %}
+                <p>Public</p>
+            {% else %}
+                <p>Private</p>
+            {% endif %}
+        </div>
     {% endfor %}
 {% endblock  %}

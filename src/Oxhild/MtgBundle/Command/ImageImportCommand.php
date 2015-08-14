@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Doctrine\ORM\EntityManager;
 
-class CardCommand extends ContainerAwareCommand
+class ImageImportCommand extends ContainerAwareCommand
 {
 
     /** @var  EntityManager $em */
@@ -18,10 +18,8 @@ class CardCommand extends ContainerAwareCommand
 
     protected function configure()
     {
-        $this
-            ->setName('mtg:import:cards')
-            ->setDescription('Import card images')
-        ;
+        $this->setName('mtg:import:images')
+            ->setDescription('Import card images');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -29,6 +27,14 @@ class CardCommand extends ContainerAwareCommand
         $this->em = $this->getContainer()->get("doctrine.orm.default_entity_manager");
         $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
 
+        $availableDomains = ['mtgcorporation', 'starcitygames', 'gatherer'];
 
+        $isPinged = false;
+
+        do {
+
+        } while (
+            $isPinged === false;
+        );
     }
 }

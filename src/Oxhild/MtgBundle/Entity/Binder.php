@@ -19,11 +19,6 @@ class Binder
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Card", cascade={"persist"})
-     **/
-    protected $cards;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Oxhild\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */

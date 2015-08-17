@@ -30,11 +30,5 @@ class ImageImportCommand extends ContainerAwareCommand
         $availableDomains = ['mtgcorporation', 'starcitygames', 'gatherer'];
 
         $isPinged = false;
-
-        do {
-
-        } while (
-            $isPinged === false;
-        );
     }
 }

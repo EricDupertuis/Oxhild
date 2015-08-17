@@ -20,10 +20,6 @@ class Binder
 
     /**
      * @ORM\ManyToMany(targetEntity="Card", cascade={"persist"})
-     * @ORM\JoinTable(name="binders_cards",
-     *      joinColumns={@ORM\JoinColumn(name="binder_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="card_id", referencedColumnName="id")}
-     *      )
      **/
     protected $cards;
 

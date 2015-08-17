@@ -11,9 +11,11 @@ oxhild_binder_new:
     defaults: { _controller: OxhildMtgBundle:Binder:new }
 
 oxhild_search_card:
-    path:     /search/{name}
-    defaults: { _controller: OxhildMtgBundle:Default:search }
+    path:     /card/search
+    defaults: { _controller: OxhildMtgBundle:Card:search }
+    requirements:
+        _method: POST
 
 oxhild_show_card:
-    path:     /card/{id}
+    path:     /{id}/card
     defaults: { _controller: OxhildMtgBundle:Card:show }

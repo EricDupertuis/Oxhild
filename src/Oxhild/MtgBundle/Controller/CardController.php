@@ -63,29 +63,6 @@ class CardController extends Controller
 
     public function searchAction(Request $request)
     {
-        $form = $this->createForm(new SearchCardForm());
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()){
-            dump(true);
-        }
-
-        if ($form->isValid()) {
-            $query = new Query($this->em);
-
-            $cards = $query->getEntityManager()
-                ->getRepository('OxhildMtgBundle:Card')
-                ->createQueryBuilder('c')
-                ->where('m.name LIKE :cardName')
-                ->setParameter('cardName', $form->getData())
-                ->getQuery();
-
-            $result = $cards->getResult();
-
-            dump($result);
-        }
-
-        return $this->render('OxhildMtgBundle:Components:usersidebar.html.twig', array('form' => $form->createView()));
     }
 }

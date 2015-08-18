@@ -15,11 +15,21 @@ class BinderController extends Controller
         $user = $this->getUser();
         $binders = $this->getDoctrine()
             ->getRepository('OxhildMtgBundle:Binder')
-            ->findBy([
-                'user' => $user->getId()]
+            ->findBy(
+                ['user' => $user->getId()]
             );
 
-        dump($binders);
+        foreach ($binders as $binder) {
+            $associations = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('OxhildMtgBundle:BinderCard')
+                ->findBy(['binder' => $binder]);
+
+            foreach ($associations as $binderCard) {
+                dump($binderCard->getCard()->getName());
+            }
+
+        }
 
         return $this->render('OxhildMtgBundle:Binder:list.html.twig', array(
             'binders' => $binders
@@ -60,6 +70,17 @@ class BinderController extends Controller
         return $this->render('OxhildMtgBundle:Binder:new.html.twig', array(
             'form' => $form->createView()
         ));
+    }
+
+    public function retrieveCards($binder){
+        $em = $this->getDoctrine()->getManager();
+        $binderCards = $em->getRepository('OxhildMtgBundle:BinderCard')
+            ->findBy(
+                [
+                    'binder' => $binder
+                ]
+            );
+        return $binderCards;
     }
 
 }

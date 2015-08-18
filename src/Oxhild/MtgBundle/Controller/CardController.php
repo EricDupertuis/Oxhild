@@ -2,10 +2,10 @@
 
 namespace Oxhild\MtgBundle\Controller;
 
+use Oxhild\MtgBundle\Entity\BinderCard;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use \Doctrine\ORM\EntityManager;
 use \Doctrine\ORM\Query;
-use Oxhild\MtgBundle\Form\SearchCardForm;
 use Oxhild\MtgBundle\Entity\Binder;
 use Oxhild\MtgBundle\Form\AddCardForm;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,17 +38,32 @@ class CardController extends Controller
 
         if ($form->isValid()) {
             $data = $form->getData();
-            dump($data);
+            $em = $this->getDoctrine()->getManager();
 
-            $binder = $this->getDoctrine()
-                ->getRepository('OxhildMtgBundle:Binder')
+            $binder = $em->getRepository('OxhildMtgBundle:Binder')
                 ->findOneBy(['name' => $data->getName()->getName()]);
 
-            $binder->addCard($card);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($binder);
-            $em->flush();
+            $binderCard = $em->getRepository('OxhildMtgBundle:BinderCard')
+                ->findOneBy(
+                    [
+                        'binder' => $binder->getId(),
+                        'card' => $card->getId()
+                    ]
+                );
 
+            if ($binderCard == null) {
+                $binderCard = new BinderCard();
+                $binderCard->setCard($card);
+                $binderCard->setBinder($binder);
+                $binderCard->setCount(1);
+            } else {
+                $binderCard->setCard($card);
+                $binderCard->setBinder($binder);
+                $binderCard->addCount();
+            }
+
+            $em->persist($binderCard);
+            $em->flush();
         }
 
         return $this->render('OxhildMtgBundle:Card:show.html.twig', [

@@ -17,5 +17,5 @@ oxhild_search_card:
         _method: POST
 
 oxhild_show_card:
-    path:     /{id}/card
+    path:     /card/details/{id}
     defaults: { _controller: OxhildMtgBundle:Card:show }

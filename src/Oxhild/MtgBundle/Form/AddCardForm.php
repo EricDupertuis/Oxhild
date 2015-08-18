@@ -17,7 +17,10 @@ class AddCardForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'entity', [
+        $builder->add(
+            'name',
+            'entity',
+            [
                 'class' => 'OxhildMtgBundle:Binder',
                 'query_builder' => function (EntityRepository $er) use($options) {
                     return $er->createQueryBuilder('b')
@@ -25,7 +28,8 @@ class AddCardForm extends AbstractType
                         ->setParameter('id', $options['attr']['user'])
                         ->orderBy('b.name', 'ASC');
                 }
-            ])
+            ]
+        )
             ->add('save', 'submit')
             ->getForm();
     }

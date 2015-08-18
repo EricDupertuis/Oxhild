@@ -11,15 +11,25 @@ class BinderCard
 {
     /**
      * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Oxhild\MtgBundle\Entity\Binder")
      */
     private $binder;
 
     /**
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Oxhild\MtgBundle\Entity\Card")
      */
     private $card;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $count;
 
     /**
      * @return mixed
@@ -51,5 +61,34 @@ class BinderCard
     public function setCard($card)
     {
         $this->card = $card;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCount()
+    {
+        return $this->count;
+    }
+
+    /**
+     * @param mixed $count
+     */
+    public function setCount($count)
+    {
+        $this->count = $count;
+    }
+
+    public function addCount()
+    {
+        $this->count++;
     }
 }

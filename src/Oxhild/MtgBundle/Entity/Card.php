@@ -5,7 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Oxhild\MtgBundle\Repository\CardRepository")
  * @ORM\Table(name="cards")
  */
 class Card

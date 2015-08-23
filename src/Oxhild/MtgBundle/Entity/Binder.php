@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Oxhild\MtgBundle\Repository\BinderRepository")
  * @ORM\Table(name="binders")
  */
 class Binder

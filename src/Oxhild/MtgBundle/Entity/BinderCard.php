@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Oxhild\MtgBundle\Repository\BinderCardRepository")
  */
 class BinderCard
 {

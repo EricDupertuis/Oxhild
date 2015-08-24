@@ -1,0 +1,19 @@
+{% extends "OxhildMtgBundle:Default:base.html.twig" %}
+{% block content %}
+    {% for card in cards %}
+        <div class="col-lg-4">
+            <p>{{ card.name }}</p>
+            <p>{{ card.power }}</p>
+            <p>{{ card.type }}</p>
+            {% for type in card.types %}
+                <p>{{ type.name }}</p>
+            {% endfor %}
+            {% for subtype in card.subtypes %}
+                <p>{{ subtype.name }}</p>
+            {% endfor %}
+            {% for color in card.colors %}
+                <p>{{ color.color }}</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endblock  %}

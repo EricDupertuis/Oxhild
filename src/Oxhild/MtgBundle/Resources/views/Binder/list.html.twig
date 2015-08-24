@@ -2,7 +2,7 @@
 {% block content %}
     {% for binder in binders %}
         <div class="col-lg-4">
-            <p>{{ binder.name }}</p>
+            <p><a href="{{ path('oxhild_binder_show', {'id': binder.id}) }}">{{ binder.name }}</a></p>
             <p>{{ binder.description }}</p>
             {% if binder.private == false %}
                 <p>Public</p>

@@ -2,6 +2,7 @@
 
 namespace Oxhild\MtgBundle\Controller;
 
+use Oxhild\MtgBundle\Entity\BinderCard;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Oxhild\MtgBundle\Form\NewBinderForm;
 use Oxhild\MtgBundle\Entity\Binder;
@@ -24,11 +25,6 @@ class BinderController extends Controller
                 ->getManager()
                 ->getRepository('OxhildMtgBundle:BinderCard')
                 ->findBy(['binder' => $binder]);
-
-            foreach ($associations as $binderCard) {
-                dump($binderCard->getCard()->getName());
-            }
-
         }
 
         return $this->render('OxhildMtgBundle:Binder:list.html.twig', array(
@@ -83,4 +79,16 @@ class BinderController extends Controller
         return $binderCards;
     }
 
+    public function showAction($id){
+        $cards = $this->getDoctrine()
+            ->getRepository('OxhildMtgBundle:BinderCard')
+            ->getCardsByBinder($id);
+
+        dump($cards);
+
+        return $this->render(
+            'OxhildMtgBundle:Binder:details.html.twig',
+            ['cards' => $cards]
+        );
+    }
 }

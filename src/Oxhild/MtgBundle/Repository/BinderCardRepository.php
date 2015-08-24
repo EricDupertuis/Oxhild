@@ -12,15 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class BinderCardRepository extends EntityRepository
 {
-    public function getCardsByBinder($binder)
+    public function getCardsByBinder($id)
     {
         $entities = $this->getEntityManager()
             ->getRepository('OxhildMtgBundle:BinderCard')
             ->createQueryBuilder('q')
             ->select('q')
             ->where('q.binder = :binder')
-            ->orderBy('q.card ASC')
-            ->setParameter('binder', $binder);
+            ->orderBy('q.card', 'ASC')
+            ->setParameter('binder', $id)
+            ->getQuery()
+            ->getResult();
 
         if ($entities == null) {
             return false;
@@ -29,7 +31,7 @@ class BinderCardRepository extends EntityRepository
         $cards = [];
 
         foreach ($entities as $entity) {
-            $cards[] = $entity->getCard;
+            $cards[] = $entity->getCard();
         }
 
         return $cards;

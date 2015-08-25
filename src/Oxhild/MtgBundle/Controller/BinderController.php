@@ -84,8 +84,6 @@ class BinderController extends Controller
             ->getRepository('OxhildMtgBundle:BinderCard')
             ->getCardsByBinder($id);
 
-        dump($cards);
-
         return $this->render(
             'OxhildMtgBundle:Binder:details.html.twig',
             ['cards' => $cards]

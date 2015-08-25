@@ -67,7 +67,6 @@ class BinderCardRepository extends EntityRepository
         if ($compare == null) {
             $add = new BinderCard();
             $add->setCard($card);
-            $em->flush();
             $add->setBinder($card);
             $em->persist($add);
             $em->flush();

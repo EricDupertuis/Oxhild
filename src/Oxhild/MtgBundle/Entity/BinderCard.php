@@ -5,6 +5,12 @@ namespace Oxhild\MtgBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Class BinderCard
+ *
+ * @package Oxhild\MtgBundle\Entity
+ *
+ * @author Eric Dupertuis <dupertuis.eric@gmail.com>
+ *
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="Oxhild\MtgBundle\Repository\BinderCardRepository")
  */

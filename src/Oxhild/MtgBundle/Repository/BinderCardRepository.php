@@ -3,6 +3,7 @@
 namespace Oxhild\MtgBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Oxhild\MtgBundle\Entity\BinderCard;
 
 /**
  * BinderCardRepository
@@ -35,5 +36,47 @@ class BinderCardRepository extends EntityRepository
         }
 
         return $cards;
+    }
+
+    public function addCardToBinder($card, $binder)
+    {
+        $em = $this->getEntityManager();
+
+        $card = $this->$em->getRepository('OxhildMtgBundle:Card')
+            ->find($card);
+        $binder = $em->getRepository('OxhildMtgBundle:Binder')
+            ->find($binder);
+
+        $compare = $em->getRepository('OxhildMtgBundle:BinderCard')
+            ->createQueryBuilder('r')
+            ->select('r')
+            ->where('r.binder = :binder')
+            ->andWhere('r.card = :card')
+            ->setParameter('card', $card)
+            ->setParameter('binder', $binder)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if ($compare == null) {
+            $add = new BinderCard();
+            $add->setCard($card);
+            $add->setBinder($card);
+            $em->persist($add);
+            $em->flush();
+        } else {
+            $compare->addCount();
+            $em->persist($compare);
+            $em->flush();
+        }
+    }
+
+    public function removeCardFromBinder($card, $binder)
+    {
+        $em = $this->getEntityManager();
+        $card = $this->$em->getRepository('OxhildMtgBundle:Card')
+            ->find($card);
+        $binder = $em->getRepository('OxhildMtgBundle:Binder')
+            ->find($binder);
+
     }
 }

@@ -92,4 +92,9 @@ class BinderCard
     {
         $this->count++;
     }
+
+    public function removeCard()
+    {
+        $this->count--;
+    }
 }

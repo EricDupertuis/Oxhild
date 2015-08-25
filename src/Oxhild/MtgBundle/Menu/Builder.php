@@ -5,17 +5,32 @@ namespace Oxhild\MtgBundle\Menu;
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
+/**
+ * Build KNP menu
+ *
+ * Class Builder
+ *
+ * @package Oxhild\MtgBundle\Menu
+ *
+ * @author Eric Dupertuis <dupertuis.eric@gmail.com>
+ */
 class Builder extends ContainerAware
 {
+    /**
+     * Main Menu Builder
+     *
+     * @param FactoryInterface $factory
+     * @param array $options
+     *
+     * @return \Knp\Menu\ItemInterface
+     */
     public function mainMenu(FactoryInterface $factory, array $options)
     {
         $menu = $factory->createItem(
             'root',
-            [
-                'childrenAttributes' => [
+            ['childrenAttributes' => [
                     'class' => 'nav navbar-nav navbar-right'
-                ]
-            ]
+                ]]
         );
 
         $menu->addChild('Home', ['route' => 'oxhild_homepage']);
@@ -27,56 +42,65 @@ class Builder extends ContainerAware
             $usr = $securityContext->getToken()->getUser();
             $username = ucfirst($usr->getUsername());
 
-            $menu->addChild($username, [
-                'route' => 'oxhild_homepage',
-                'attributes' => [
-                    'class' => 'dropdown'
+            $menu->addChild(
+                $username,
+                [
+                    'route' => 'oxhild_homepage',
+                    'attributes' => [
+                        'class' => 'dropdown'
+                    ]
                 ]
-            ]);
+            );
 
             $menu[$username]->setChildrenAttribute('class', 'dropdown-menu')
                             ->setAttribute('class', 'dropdown')
-                            ->setLinkAttributes([
-                                'class' => 'dropdown-toggle',
-                                'data-toggle' => 'dropdown',
-                                'role' => 'button',
-                                'aria-haspopup' => 'true',
-                                'aria-expanded' => 'false'
-                            ]);
+                            ->setLinkAttributes(
+                                [
+                                    'class' => 'dropdown-toggle',
+                                    'data-toggle' => 'dropdown',
+                                    'role' => 'button',
+                                    'aria-haspopup' => 'true',
+                                    'aria-expanded' => 'false'
+                                ]
+                            );
 
-            $menu[$username]->addChild('My Binders', [
-                'route' => 'oxhild_binder_list'
-            ]);
+            $menu[$username]->addChild(
+                'My Binders',
+                ['route' => 'oxhild_binder_list']
+            );
 
-            $menu[$username]->addChild('Profile', [
-                'route' => 'fos_user_profile_show',
-                'attributes' => [
-                    'class' => 'text-danger'
+            $menu[$username]->addChild(
+                'Profile',
+                [
+                    'route' => 'fos_user_profile_show',
+                    'attributes' => [
+                        'class' => 'text-danger'
+                    ]
                 ]
-            ]);
+            );
 
-            $menu[$username]->addChild('separator', [
-                'attributes' => [
-                    'class' =>  'divider'
+            $menu[$username]->addChild(
+                'separator',
+                ['attributes' => ['class' =>  'divider']]
+            );
+
+            $menu[$username]->addChild(
+                'New Binder',
+                [
+                    'route' => 'oxhild_binder_new',
+                    'attributes' => ['class' => 'text-danger']
                 ]
-            ]);
+            );
 
-            $menu[$username]->addChild('New Binder', [
-                'route' => 'oxhild_binder_new',
-                'attributes' => [
-                    'class' => 'text-danger'
-                ]
-            ]);
+            $menu[$username]->addChild(
+                'separator',
+                ['attributes' => ['class' =>  'divider']]
+            );
 
-            $menu[$username]->addChild('separator', [
-                'attributes' => [
-                    'class' =>  'divider'
-                ]
-            ]);
-
-            $menu[$username]->addChild('Logout', [
-                'route' => 'fos_user_security_logout',
-            ]);
+            $menu[$username]->addChild(
+                'Logout',
+                ['route' => 'fos_user_security_logout']
+            );
         } else {
             $menu->addChild('login', ['route' => 'fos_user_security_login']);
             $menu['login']->setAttribute('class', 'text-danger');

@@ -13,6 +13,28 @@ use Oxhild\MtgBundle\Entity\BinderCard;
  */
 class BinderCardRepository extends EntityRepository
 {
+    protected function getOneEntity($card, $binder)
+    {
+        $em = $this->getEntityManager();
+
+        $card = $this->$em->getRepository('OxhildMtgBundle:Card')
+            ->find($card);
+        $binder = $em->getRepository('OxhildMtgBundle:Binder')
+            ->find($binder);
+
+        $compare = $em->getRepository('OxhildMtgBundle:BinderCard')
+            ->createQueryBuilder('r')
+            ->select('r')
+            ->where('r.binder = :binder')
+            ->andWhere('r.card = :card')
+            ->setParameter('card', $card)
+            ->setParameter('binder', $binder)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return $compare;
+    }
+
     public function getCardsByBinder($id)
     {
         $entities = $this->getEntityManager()
@@ -40,26 +62,12 @@ class BinderCardRepository extends EntityRepository
 
     public function addCardToBinder($card, $binder)
     {
+        $compare = $this->getOneEntity($card, $binder);
         $em = $this->getEntityManager();
-
-        $card = $this->$em->getRepository('OxhildMtgBundle:Card')
-            ->find($card);
-        $binder = $em->getRepository('OxhildMtgBundle:Binder')
-            ->find($binder);
-
-        $compare = $em->getRepository('OxhildMtgBundle:BinderCard')
-            ->createQueryBuilder('r')
-            ->select('r')
-            ->where('r.binder = :binder')
-            ->andWhere('r.card = :card')
-            ->setParameter('card', $card)
-            ->setParameter('binder', $binder)
-            ->getQuery()
-            ->getOneOrNullResult();
-
         if ($compare == null) {
             $add = new BinderCard();
-            $add->setCard($card);
+            $add->setCard($card);                $em->flush();
+
             $add->setBinder($card);
             $em->persist($add);
             $em->flush();
@@ -72,11 +80,20 @@ class BinderCardRepository extends EntityRepository
 
     public function removeCardFromBinder($card, $binder)
     {
-        $em = $this->getEntityManager();
-        $card = $this->$em->getRepository('OxhildMtgBundle:Card')
-            ->find($card);
-        $binder = $em->getRepository('OxhildMtgBundle:Binder')
-            ->find($binder);
+        $compare = $this->getOneEntity($card, $binder);
 
+        if ($compare == null) {
+            return false;
+        } else {
+            $em = $this->getEntityManager();
+            $compare->removeCount();
+            if ($compare->getCount() === 0) {
+                $em->remove($compare);
+            } else {
+                $em->persist($compare);
+            }
+            $em->flush();
+            return true;
+        }
     }
 }

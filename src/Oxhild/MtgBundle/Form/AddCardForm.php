@@ -7,12 +7,21 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
 
+/**
+ * Class AddCardForm
+ *
+ * @package Oxhild\MtgBundle\Form
+ *
+ * @author Eric Dupertuis <dupertuis.eric@gmail.com>
+ */
 class AddCardForm extends AbstractType
 {
     /**
      * Builds the SearchCard form
+     *
      * @param  \Symfony\Component\Form\FormBuilderInterface $builder
      * @param  array $options
+     *
      * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -34,6 +43,13 @@ class AddCardForm extends AbstractType
             ->getForm();
     }
 
+    /**
+     * Configure options
+     *
+     * @param OptionsResolver $resolvers
+     *
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -42,6 +58,11 @@ class AddCardForm extends AbstractType
         ]);
     }
 
+    /**
+     * Get form name
+     *
+     * @return string
+     */
     public function getName()
     {
         return 'oxhild_add_card';

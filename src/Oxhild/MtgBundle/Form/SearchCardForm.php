@@ -6,12 +6,21 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class SearchCardForm
+ *
+ * @package Oxhild\MtgBundle\Form
+ *
+ * @author Eric Dupertuis <dupertuis.eric@gmail.com>
+ */
 class SearchCardForm extends AbstractType
 {
     /**
      * Builds the SearchCard form
+     *
      * @param  \Symfony\Component\Form\FormBuilder $builder
      * @param  array $options
+     *
      * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -20,6 +29,13 @@ class SearchCardForm extends AbstractType
             ->getForm();
     }
 
+    /**
+     * Configure options
+     *
+     * @param OptionsResolver $resolver
+     *
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
@@ -29,6 +45,11 @@ class SearchCardForm extends AbstractType
         );
     }
 
+    /**
+     * Get form name
+     *
+     * @return string
+     */
     public function getName()
     {
         return 'oxhild_search_card';

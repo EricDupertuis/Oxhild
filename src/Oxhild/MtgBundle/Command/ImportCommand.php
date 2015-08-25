@@ -22,6 +22,10 @@ use \DateTime;
 /**
  * Class ImportCommand
  *
+ * This scripts needs a good amount of RAM, do not run this on
+ * a 28MB vhost as it won't work. The script itself doesn't need too
+ * much ram but flushing does
+ *
  * @package Oxhild\MtgBundle\Command
  *
  * @author Eric Dupertuis <dupertuis.eric@gmail.com>s
@@ -91,9 +95,8 @@ class ImportCommand extends ContainerAwareCommand
         foreach ($data as $content) {
             // Import set first
 
-            $searchSet = $this->em->getRepository('OxhildMtgBundle:Set')->findOneBy(
-                array('name' => $content['name'])
-            );
+            $searchSet = $this->em->getRepository('OxhildMtgBundle:Set')
+                ->findOneBy(['name' => $content['name']]);
 
             if ($searchSet === null) {
 
@@ -102,9 +105,8 @@ class ImportCommand extends ContainerAwareCommand
                 $set = new Set();
                 $settype = new Settype();
 
-                $type = $this->em->getRepository('OxhildMtgBundle:Settype')->findOneBy(
-                    array('name' => $content['type'])
-                );
+                $type = $this->em->getRepository('OxhildMtgBundle:Settype')
+                    ->findOneBy(['name' => $content['type']]);
 
                 if ($type === null) {
                     $output->writeln('<info> Set type not found, adding to database '.$content['type'].'</info>');
@@ -149,7 +151,8 @@ class ImportCommand extends ContainerAwareCommand
                     $card = new Card();
 
                     // Layout
-                    $searchLayout = $this->em->getRepository('OxhildMtgBundle:Layout')->findOneBy(["name" => $cardData['layout']]);
+                    $searchLayout = $this->em->getRepository('OxhildMtgBundle:Layout')
+                        ->findOneBy(["name" => $cardData['layout']]);
 
                     if ($searchLayout === null) {
                         $newLayout = new Layout();
@@ -165,7 +168,8 @@ class ImportCommand extends ContainerAwareCommand
                     if (isset($cardData['types'])) {
                         foreach($cardData['types'] as $cardType) {
 
-                            $searchType = $this->em->getRepository('OxhildMtgBundle:Type')->findOneBy(['name' => $cardType]);
+                            $searchType = $this->em->getRepository('OxhildMtgBundle:Type')
+                                ->findOneBy(['name' => $cardType]);
 
                             if ($searchType === null) {
                                 $newType = new Type();
@@ -183,7 +187,8 @@ class ImportCommand extends ContainerAwareCommand
                     //Colors
                     if  (isset($cardData['colors'])) {
                         foreach($cardData['colors'] as $color) {
-                            $searchColor = $this->em->getRepository('OxhildMtgBundle:Color')->findOneBy(['color' => $color]);
+                            $searchColor = $this->em->getRepository('OxhildMtgBundle:Color')
+                                ->findOneBy(['color' => $color]);
 
                             if ($searchColor === null) {
                                 $newColor = new MtgColor();
@@ -200,7 +205,8 @@ class ImportCommand extends ContainerAwareCommand
                     // Subtypes
                     if (isset($cardData['subtypes'])) {
                         foreach ($cardData['subtypes'] as $subtype) {
-                            $searchSubt = $this->em->getRepository('OxhildMtgBundle:Subtype')->findOneBy(['name' => $subtype]);
+                            $searchSubt = $this->em->getRepository('OxhildMtgBundle:Subtype')
+                                ->findOneBy(['name' => $subtype]);
 
                             if ($searchSubt === null) {
                                 $newSubtype = new Subtype();
@@ -217,7 +223,8 @@ class ImportCommand extends ContainerAwareCommand
                     // Supertypes
                     if (isset($cardData['supertypes'])) {
                         foreach ($cardData['supertypes'] as $supertype) {
-                            $searchSt = $this->em->getRepository('OxhildMtgBundle:Supertype')->findOneBy(['name' => $supertype]);
+                            $searchSt = $this->em->getRepository('OxhildMtgBundle:Supertype')
+                                ->findOneBy(['name' => $supertype]);
 
                             if ($searchSt === null) {
                                 $newSupertype = new Supertype();
@@ -232,7 +239,8 @@ class ImportCommand extends ContainerAwareCommand
                     // End Supertypes
 
                     // Rarity
-                    $searchRarity = $this->em->getRepository('OxhildMtgBundle:Rarity')->findOneBy(['rarity' => $cardData['rarity']]);
+                    $searchRarity = $this->em->getRepository('OxhildMtgBundle:Rarity')
+                        ->findOneBy(['rarity' => $cardData['rarity']]);
 
                     if ($searchRarity === null) {
                         $newRarity = new Rarity();
@@ -245,7 +253,8 @@ class ImportCommand extends ContainerAwareCommand
                     // End Rarity
 
                     // Artist
-                    $searchArtist = $this->em->getRepository('OxhildMtgBundle:Artist')->findOneBy(['name' => $cardData['artist']]);
+                    $searchArtist = $this->em->getRepository('OxhildMtgBundle:Artist')
+                        ->findOneBy(['name' => $cardData['artist']]);
 
                     if ($searchArtist === null) {
                         $newArtist = new Artist();
@@ -312,12 +321,13 @@ class ImportCommand extends ContainerAwareCommand
 
                     $this->em->persist($card);
                     $progress->advance();
-
-                    $this->em->flush();
                 }
             } else {
                 $output->writeln('<info> Set exists, skipping</info>');
             }
         }
+        $output->writeln('<info>Waiting, flush is running</info>');
+        $this->em->flush();
+        return true;
     }
 }

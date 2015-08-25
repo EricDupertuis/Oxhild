@@ -7,24 +7,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
+/**
+ * Class CheckImageController
+ *
+ * @package Oxhild\MtgBundle\Controller
+ *
+ * @author Eric Dupertuis <dupertuis.eric@gmail.com>
+ */
 class CheckImageController extends Controller
 {
+    /**
+     * Check if image is available, otherwise, scrape it
+     *
+     * @param int $multiverse Multiverse Id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function checkImageAction($multiverse)
     {
         $fs = new Filesystem();
         if ($fs->exists("/scans/".$multiverse.".jpg")) {
             return $this->render(
                 "OxhildMtgBundle:Card:scanImage.html.twig",
-                [
-                    'id' => $multiverse
-                ]
+                ['id' => $multiverse]
             );
         } else {
             return $this->render(
                 "OxhildMtgBundle:Card:scanImage.html.twig",
-                [
-                    'id' => $multiverse
-                ]
+                ['id' => $multiverse]
             );
         }
     }

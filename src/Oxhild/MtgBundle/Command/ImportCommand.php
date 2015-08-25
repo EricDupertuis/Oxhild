@@ -19,22 +19,45 @@ use Oxhild\MtgBundle\Entity\Type;
 use Oxhild\MtgBundle\Entity\Color as MtgColor;
 use \DateTime;
 
+/**
+ * Class ImportCommand
+ *
+ * @package Oxhild\MtgBundle\Command
+ *
+ * @author Eric Dupertuis <dupertuis.eric@gmail.com>s
+ */
 class ImportCommand extends ContainerAwareCommand
 {
 
-    /** @var  EntityManager $em */
+    /**
+     * Entity manager
+     *
+     * @var EntityManager $em
+     */
     protected $em;
 
-    protected $isDebug = true; // put false if you have active internet connection, allows offline dev
+    protected $isDebug = true; // Allows offline dev if true
 
+    /**
+     * Configure command line options
+     *
+     * @return void
+     */
     protected function configure()
     {
         $this
             ->setName('mtg:import:all')
-            ->setDescription('Import data from AllSets.json')
-        ;
+            ->setDescription('Import data from AllSets.json');
     }
 
+    /**
+     * Execute mtg:import:all
+     *
+     * @param InputInterface  $input  Command line input
+     * @param OutputInterface $output Command line output
+     *
+     * @return mixed
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->em = $this->getContainer()->get("doctrine.orm.default_entity_manager");

@@ -8,20 +8,39 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Doctrine\ORM\EntityManager;
 
+/**
+ * Class ImageImportCommand
+ * @package Oxhild\MtgBundle\Command
+ */
 class ImageImportCommand extends ContainerAwareCommand
 {
 
-    /** @var  EntityManager $em */
+    /**
+     * Entity Manager
+     *
+     * @var EntityManager $em
+     */
     protected $em;
 
-    protected $isDebug = true; // put false if you have active internet connection, allows offline dev
-
+    /**
+     * Configure command line options
+     *
+     * @return void
+     */
     protected function configure()
     {
         $this->setName('mtg:import:images')
             ->setDescription('Import card images');
     }
 
+    /**
+     * Execute mtg:import:images
+     *
+     * @param InputInterface  $input  Command line input
+     * @param OutputInterface $output Command line output
+     *
+     * @return void
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->em = $this->getContainer()->get("doctrine.orm.default_entity_manager");

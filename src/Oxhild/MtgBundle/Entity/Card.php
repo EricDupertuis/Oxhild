@@ -5,6 +5,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Binder entity
+ *
+ * @package Oxhild\MtgBundle\Entity
+ *
+ * @author Eric Dupertuis <dupertuis.eric@gmail.com>
  * @ORM\Entity(repositoryClass="Oxhild\MtgBundle\Repository\CardRepository")
  * @ORM\Table(name="cards")
  */

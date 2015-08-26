@@ -5,6 +5,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Subtype entity
+ *
+ * @package Oxhild\MtgBundle\Entity
+ *
+ * @author Eric Dupertuis <dupertuis.eric@gmail.com>
+ *
+ *
  * @ORM\Entity
  * @ORM\Table(name="subtypes")
  */

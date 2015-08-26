@@ -3,6 +3,12 @@ namespace Oxhild\MtgBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 /**
+ * Type entity
+ *
+ * @package Oxhild\MtgBundle\Entity
+ *
+ * @author Eric Dupertuis <dupertuis.eric@gmail.com>
+ *
  * @ORM\Entity
  * @ORM\Table(name="types")
  */

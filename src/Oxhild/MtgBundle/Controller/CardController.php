@@ -10,11 +10,28 @@ use Oxhild\MtgBundle\Entity\Binder;
 use Oxhild\MtgBundle\Form\AddCardForm;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class CardController
+ *
+ * @package Oxhild\MtgBundle\Controller
+ *
+ * @author Eric Dupertuis <dupertuis.eric@gmail.com>
+ */
 class CardController extends Controller
 {
-    /** @var  EntityManager $em */
+    /**
+     * @var EntityManager $em Doctrine entity manager
+     */
     protected $em;
 
+    /**
+     * Show one card details
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function showAction(Request $request, $id)
     {
         $card = $this->getDoctrine()
@@ -76,6 +93,11 @@ class CardController extends Controller
         ]);
     }
 
+    /**
+     * Search for cards by name
+     *
+     * @param Request $request
+     */
     public function searchAction(Request $request)
     {
 

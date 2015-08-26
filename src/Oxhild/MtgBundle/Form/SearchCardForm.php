@@ -32,7 +32,7 @@ class SearchCardForm extends AbstractType
     /**
      * Configure options
      *
-     * @param OptionsResolver $resolver
+     * @param OptionsResolver $resolvers Form Options resolver
      *
      * @return void
      */

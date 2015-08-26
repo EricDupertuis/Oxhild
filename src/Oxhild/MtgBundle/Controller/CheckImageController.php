@@ -27,10 +27,10 @@ class CheckImageController extends Controller
         $image = $this->getDoctrine()
             ->getManager()
             ->getRepository('OxhildMtgBundle:ImageScan')
-            ->findOneBy('name' => $card->getName());
+            ->findOneBy(['name' => $card->getName()]);
 
         $path = $image->getName().$image->getExtension();
 
-        return $path
+        return $path;
     }
 }

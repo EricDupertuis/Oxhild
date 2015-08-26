@@ -2,7 +2,7 @@
 {% block content %}
     {% for card in cards %}
         <div class="col-lg-4">
-            {{ render(controller('OxhildMtgBundle:CheckImage:checkImage', { 'multiverse': card.multiverseid })) }}
+            {{ render(controller('OxhildMtgBundle:CheckImage:checkImage', { 'card': card })) }}
             <p>{{ card.name }}</p>
         </div>
     {% endfor %}

@@ -100,7 +100,7 @@ class Card
     protected $image_name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ImageScan", inversedBy="cards")
+     * @ORM\OneToMany(targetEntity="ImageScan", mappedBy="cards")
      */
     protected $scan;
 

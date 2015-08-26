@@ -36,7 +36,7 @@ class ImageScan
     protected $extension;
 
     /**
-     * @ORM\OneToMany(targetEntity="Oxhild\MtgBundle\Entity\Card", mappedBy="scan")
+     * @ORM\ManyToOne(targetEntity="Oxhild\MtgBundle\Entity\Card", inversedBy="scan")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $cards;

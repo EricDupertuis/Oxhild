@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * Image entity
+ * ImageScan entity
  *
  * @package Oxhild\MtgBundle\Entity
  *

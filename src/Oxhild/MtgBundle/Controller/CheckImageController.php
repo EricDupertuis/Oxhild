@@ -25,17 +25,6 @@ class CheckImageController extends Controller
      */
     public function checkImageAction($multiverse)
     {
-        $fs = new Filesystem();
-        if ($fs->exists("/scans/".$multiverse.".jpg")) {
-            return $this->render(
-                "OxhildMtgBundle:Card:scanImage.html.twig",
-                ['id' => $multiverse]
-            );
-        } else {
-            return $this->render(
-                "OxhildMtgBundle:Card:scanImage.html.twig",
-                ['id' => $multiverse]
-            );
-        }
+
     }
 }

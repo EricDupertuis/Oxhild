@@ -46,10 +46,11 @@ class CardController extends Controller
 
         $userId = $this->getUser()->getId();
 
-        $form = $this->createForm(new AddCardForm(), new binder(), ['attr' => [
-                'user' => $userId
-            ]
-        ]);
+        $form = $this->createForm(
+            new AddCardForm(),
+            new binder(),
+            ['attr' => ['user' => $userId]]
+        );
 
         $form->handleRequest($request);
 
@@ -83,14 +84,15 @@ class CardController extends Controller
             $em->flush();
         }
 
-        return $this->render('OxhildMtgBundle:Card:show.html.twig', [
-            'card' => $card,
+        return $this->render(
+            'OxhildMtgBundle:Card:show.html.twig',
+            ['card' => $card,
             'rarity' => $card->getRarity(),
             'artist' => $card->getArtist(),
             'layout' => $card->getLayout(),
             'set' => $card->getSet(),
-            'form' => $form->createView()
-        ]);
+            'form' => $form->createView()]
+        );
     }
 
     /**

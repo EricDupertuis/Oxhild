@@ -615,4 +615,27 @@ class Card
 
         return $this;
     }
+
+    /**
+     * Set scan
+     *
+     * @param \Oxhild\MtgBundle\Entity\ImageScan $scan
+     * @return Card
+     */
+    public function setScan(\Oxhild\MtgBundle\Entity\ImageScan $scan = null)
+    {
+        $this->scan = $scan;
+
+        return $this;
+    }
+
+    /**
+     * Get scan
+     *
+     * @return \Oxhild\MtgBundle\Entity\ImageScan 
+     */
+    public function getScan()
+    {
+        return $this->scan;
+    }
 }

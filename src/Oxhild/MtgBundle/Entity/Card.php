@@ -100,6 +100,11 @@ class Card
     protected $image_name;
 
     /**
+     * @ORM\ManyToOne(targetEntity="ImageScan", inversedBy="cards")
+     */
+    protected $scan;
+
+    /**
      * Constructor
      */
     public function __construct()

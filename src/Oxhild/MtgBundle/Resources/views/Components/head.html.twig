@@ -14,4 +14,9 @@
         {% endstylesheets %}
     {% endblock %}
 
+    {% javascripts
+    "@OxhildMtgBundle/Resources/public/vendor/jquery/dist/jquery.min.js"
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

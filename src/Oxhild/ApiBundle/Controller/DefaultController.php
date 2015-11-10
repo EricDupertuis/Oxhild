@@ -2,10 +2,8 @@
 
 namespace Oxhild\ApiBundle\Controller;
 
-use Oxhild\ApiBundle\Form\SearchCardForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Oxhild\ApiBundle\Form\AddCardForm;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class DefaultController
@@ -23,6 +21,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('OxhildApiBundle:Default:base.html.twig');
+        return new Response('<h1>API</h1>');
     }
 }

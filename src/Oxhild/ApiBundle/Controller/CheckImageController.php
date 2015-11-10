@@ -30,7 +30,7 @@ class CheckImageController extends Controller
             ->findOneBy(['cards' => $card]);
 
         if ($image == null) {
-            return false;
+            return ;
         } else {
             $path = $image->getName().$image->getExtension();
             return $path;

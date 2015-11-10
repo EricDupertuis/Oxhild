@@ -3,7 +3,7 @@ oxhild_user:
     prefix:   /
 
 oxhild_mtg:
-    resource: "@OxhildMtgBundle/Resources/config/routing.yml"
+    resource: "@OxhildApiBundle/Resources/config/routing.yml"
     prefix:   /
 
 fos_user:

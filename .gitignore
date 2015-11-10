@@ -29,11 +29,11 @@ Temporary Items
 /remote-medias/
 
 # Bower
-src/Oxhild/MtgBundle/Resources/public/vendor
+src/Oxhild/ApiBundle/Resources/public/vendor
 
 #assetic
 web/css
 web/js
 
 #sass-cache
-src/Oxhild/MtgBundle/Resources/public/.sass-cache
+src/Oxhild/ApiBundle/Resources/public/.sass-cache

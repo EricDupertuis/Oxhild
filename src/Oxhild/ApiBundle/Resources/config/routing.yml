@@ -1,0 +1,25 @@
+oxhild_homepage:
+    path:     /
+    defaults: { _controller: OxhildApiBundle:Default:index }
+
+oxhild_binder_list:
+    path:   /binder/list
+    defaults: { _controller: OxhildApiBundle:Binder:list }
+
+oxhild_binder_show:
+    path:   /binder/details/{id}
+    defaults: { _controller: OxhildApiBundle:Binder:show }
+
+oxhild_binder_new:
+    path:   /binder/new
+    defaults: { _controller: OxhildApiBundle:Binder:new }
+
+oxhild_search_card:
+    path:     /card/search
+    defaults: { _controller: OxhildApiBundle:Card:search }
+    requirements:
+        _method: POST
+
+oxhild_show_card:
+    path:     /card/details/{id}
+    defaults: { _controller: OxhildApiBundle:Card:show }

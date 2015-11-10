@@ -17,7 +17,6 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-            new Oxhild\MtgBundle\OxhildMtgBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Oxhild\UserBundle\OxhildUserBundle(),
         );

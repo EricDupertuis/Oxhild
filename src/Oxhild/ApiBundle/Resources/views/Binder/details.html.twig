@@ -1,0 +1,9 @@
+{% extends "OxhildApiBundle:Default:base.html.twig" %}
+{% block content %}
+    {% for card in cards %}
+        <div class="col-lg-4">
+            {{ render(controller('OxhildApiBundle:CheckImage:checkImage', { 'card': card })) }}
+            <p>{{ card.name }}</p>
+        </div>
+    {% endfor %}
+{% endblock  %}

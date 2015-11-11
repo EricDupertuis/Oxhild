@@ -1,3 +1,7 @@
+oxhild_front:
+    resource: "@OxhildFrontBundle/Resources/config/routing.yml"
+    prefix:   /
+
 oxhild_user:
     resource: "@OxhildUserBundle/Resources/config/routing.yml"
     prefix:   /

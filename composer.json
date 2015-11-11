@@ -23,7 +23,6 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "@dev",
         "symfony/console": "@dev",
-        "knplabs/knp-menu-bundle": "~2",
         "friendsofsymfony/rest-bundle": "^1.7"
     },
     "require-dev": {

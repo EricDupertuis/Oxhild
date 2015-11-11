@@ -1,0 +1,3 @@
+oxhild_front_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: OxhildFrontBundle:Default:index }

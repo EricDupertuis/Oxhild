@@ -1,0 +1,4 @@
+services:
+#    oxhild_front.example:
+#        class: Oxhild\FrontBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
